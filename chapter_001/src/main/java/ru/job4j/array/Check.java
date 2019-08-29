@@ -8,7 +8,7 @@ public class Check {
             tmp = data[0];
         }
         for (int i = 1; i < data.length; i++) {
-            if (tmp != data[i]){
+            if (tmp != data[i]) {
                 result = false;
                 break;
             }

@@ -5,8 +5,9 @@ import org.junit.Test;
 
 public class FitTest {
     private static final double DELTA = 0.1;
+
     @Test
-    public void manWeight(){
+    public void manWeight() {
         double in = 100;
         double expected = 0;
 
@@ -14,7 +15,7 @@ public class FitTest {
     }
 
     @Test
-    public void womanWeight(){
+    public void womanWeight() {
         double in = 200;
         double expected = 103.5;
 
