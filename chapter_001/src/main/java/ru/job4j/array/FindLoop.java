@@ -17,4 +17,40 @@ public class FindLoop {
 
         return rst;
     }
+
+    /**
+     * Sort array by Selection Sort algorithm
+     * <p>
+     * Explanation
+     * Selection Sort divides the array into a sorted and unsorted subarray.
+     * The sorted subarray is formed by inserting the minimum element of the unsorted subarray at the end of the sorted array, by swapping.
+     *
+     * @param data - array to sort
+     * @return sorted array
+     */
+    public int[] sort(int[] data) {
+        for (int i = 0; i < data.length; i++) {
+            int indexOfMin = i;
+            boolean findMin = false;
+
+            // Looking for minimum element
+            for (int j = i + 1; j < data.length; j++) {
+                if (data[indexOfMin] > data[j]) {
+                    indexOfMin = j;
+                    findMin = true;
+                }
+            }
+
+            if (findMin) {
+                // Swap elements
+                int tmp = data[i];
+                data[i] = data[indexOfMin];
+                data[indexOfMin] = tmp;
+            } else {
+                break;
+            }
+        }
+
+        return data;
+    }
 }
