@@ -15,23 +15,19 @@ public class ArrayDuplicate {
      * @return array without duplicates
      */
     public String[] remove(String[] array) {
-        int duplicateQuantity = 0;
-        for (int i = 0; i < array.length - duplicateQuantity; i++) {
-            String curElement = array[i];
-
-            for (int j = i + 1; j < array.length - duplicateQuantity; j++) {
-                if (curElement.equals(array[j])) {
-                    // swapping
+        int duplicates = 0;
+        for (int i = 0; i < array.length - duplicates; i++) {
+            String current = array[i];
+            for (int j = i + 1; j < array.length - duplicates; j++) {
+                if (current.equals(array[j])) {
                     String tmp = array[j];
-                    array[j] = array[array.length - 1 - duplicateQuantity];
+                    array[j] = array[array.length - 1 - duplicates];
                     array[array.length - 1] = tmp;
-
                     j--;
-                    duplicateQuantity++;
+                    duplicates++;
                 }
             }
         }
-
-        return copyOf(array, array.length - duplicateQuantity);
+        return copyOf(array, array.length - duplicates);
     }
 }

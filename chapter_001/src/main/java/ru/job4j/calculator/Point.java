@@ -8,7 +8,6 @@ public class Point {
     public static void main(String[] args) {
         double result = distance(0, 0, 2, 0);
         System.out.println("result (0, 0) to (2, 0) " + result);
-
         System.out.println(String.format("result (%d, %d) to (%d, %d) %.2f", 0, 1, 2, 3, distance(0, 1, 2, 3)));
         System.out.println(String.format("result (%d, %d) to (%d, %d) %.2f", 0, 10, 2, 3, distance(0, 10, 2, 3)));
         System.out.println(String.format("result (%d, %d) to (%d, %d) %.2f", 0, 1, 20, 3, distance(0, 1, 20, 3)));
