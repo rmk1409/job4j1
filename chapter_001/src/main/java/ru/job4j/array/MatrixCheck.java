@@ -2,27 +2,15 @@ package ru.job4j.array;
 
 public class MatrixCheck {
     public boolean mono(boolean[][] data) {
-        boolean result;
-        boolean hasMiddle = data[0].length % 2 != 0;
+        boolean result = true;
 
-        boolean sample;
-        if (hasMiddle) {
-            int middle = (int) Math.floor(data[0].length / 2);
-            sample = data[middle][middle];
+        for (int i = 1, length = data[0].length; i < length; i++) {
+            boolean check1stDiagonal = data[i - 1][i - 1] == data[i][i];
+            boolean check2ndDiagonal = data[length - 1][length - 1] == data[length - 1 - i][length - 1 - i];
 
-            result = this.check1stDiagonal(data, sample);
-
-            if (result) {
-                result = this.check2ndDiagonal(data, sample);
-            }
-        } else {
-            sample = data[0][0];
-
-            result = this.check1stDiagonal(data, sample);
-
-            if (result) {
-                sample = data[0][data.length - 1];
-                result = this.check2ndDiagonal(data, sample);
+            if (!check1stDiagonal && !check2ndDiagonal) {
+                result = false;
+                break;
             }
         }
 
