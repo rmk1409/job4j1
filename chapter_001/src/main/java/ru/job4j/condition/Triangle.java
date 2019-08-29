@@ -1,6 +1,6 @@
 package ru.job4j.condition;
 
-import java.awt.*;
+import ru.job4j.calculator.Point;
 
 public class Triangle {
 
@@ -33,19 +33,7 @@ public class Triangle {
     private boolean exist(double a, double c, double b) {
         // Triangle Inequality Theorem.
         // The sum of the lengths of any two sides of a triangle is greater than the length of the third side.
-        boolean result = true;
-
-        if (a + b < c) {
-            result = false;
-        }
-        if (a + c < b) {
-            result = false;
-        }
-        if (b + c < a) {
-            result = false;
-        }
-
-        return result;
+        return a + b > c && a + c > b && b + c > a;
     }
 
     /**
@@ -61,9 +49,9 @@ public class Triangle {
      */
     public double area(int x1, int y1, int x2, int y2, int x3, int y3) {
         double rsl = -1;
-        double a = new Point().distance(x1, y1, x2, y2);
-        double b = new Point().distance(x2, y2, x3, y3);
-        double c = new Point().distance(x1, y1, x3, y3);
+        double a = Point.distance(x1, y1, x2, y2);
+        double b = Point.distance(x2, y2, x3, y3);
+        double c = Point.distance(x1, y1, x3, y3);
         double p = period(a, b, c);
         if (this.exist(a, b, c)) {
             // написать формулу для расчета площади треугольника.
