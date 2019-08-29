@@ -71,53 +71,29 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
-
         int size = table[0].length;
-
-        // check horizontal lines
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                // if zero, then there is no point to check this row, go to the next one.
-                if (table[i][j] == 0) {
-                    break;
-                }
-
-                // check winner condition - full line of 1.
-                if (j + 1 == size) {
-                    result = true;
-                    break;
-                }
-            }
-
-            // if we already win, then there is no point to check the others lines.
-            if (result) {
-                break;
-            }
-        }
-
-        // if we haven't still won, then let's check vertical columns
-        if (!result) {
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
-                    // if zero, then there is no point to check this column, go to the next one.
-                    if (table[j][i] == 0) {
-                        break;
+        for (int i = 0; i < size && !result; i++) {
+            for (int j = 0; j < size && !result; j++) {
+                if (table[i][j] == 1) {
+                    for (int k = 0; k < size; k++) {
+                        if (table[i][k] == 0) {
+                            break;
+                        }
+                        if (k + 1 == size) {
+                            result = true;
+                        }
                     }
-
-                    // check winner condition - full line of 1.
-                    if (j + 1 == size) {
-                        result = true;
-                        break;
+                    for (int k = 0; k < size && !result; k++) {
+                        if (table[k][j] == 0) {
+                            break;
+                        }
+                        if (k + 1 == size) {
+                            result = true;
+                        }
                     }
-                }
-
-                // if we already win, then there is no point to check the others columns.
-                if (result) {
-                    break;
                 }
             }
         }
-
         return result;
     }
 
