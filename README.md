@@ -1,3 +1,3 @@
 # job4j
 
-Educational courses
+Educational courses. Begin.
