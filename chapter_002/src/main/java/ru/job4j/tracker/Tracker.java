@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -48,9 +49,10 @@ public class Tracker {
      */
     public boolean replace(String id, Item item) {
         boolean result = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-                items[i] = item;
+        for (int i = 0; i < this.position; i++) {
+            if (id.equals(this.items[i].getId())) {
+                this.items[i] = item;
+                item.setId(id);
                 result = true;
                 break;
             }
@@ -85,9 +87,7 @@ public class Tracker {
      * @return массив с заявками
      */
     public Item[] findAll() {
-        Item[] result = new Item[this.position];
-        System.arraycopy(this.items, 0, result, 0, this.position);
-        return result;
+        return Arrays.copyOf(this.items, this.position);
     }
 
     /**
