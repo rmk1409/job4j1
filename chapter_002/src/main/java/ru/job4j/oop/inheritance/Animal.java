@@ -5,7 +5,7 @@ package ru.job4j.oop.inheritance;
  * Created by roman.pogorelov on 30.08.2019
  */
 public class Animal {
-    protected String name;
+    private String name;
 
     public Animal(String name) {
         super();
