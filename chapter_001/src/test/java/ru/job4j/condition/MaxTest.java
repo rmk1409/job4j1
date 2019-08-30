@@ -26,4 +26,14 @@ public class MaxTest {
         int result = max.max(1, 1);
         assertThat(result, is(1));
     }
+
+    @Test
+    public void when3numbers() {
+        assertThat(max.max(1, 2, 3), is(3));
+    }
+
+    @Test
+    public void when4numbers() {
+        assertThat(max.max(1, 4, 2, 3), is(4));
+    }
 }
