@@ -10,4 +10,6 @@ public class Dentist extends Doctor {
     public int getTooth() {
         return tooth;
     }
+
+    public Tooth removeTooth(Patient patient) {return new Tooth();}
 }

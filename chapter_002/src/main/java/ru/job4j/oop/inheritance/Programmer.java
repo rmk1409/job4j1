@@ -10,4 +10,6 @@ public class Programmer extends Engineer {
     public int getBugs() {
         return bugs;
     }
+
+    public Program refactor(Program program) {return new Program();}
 }

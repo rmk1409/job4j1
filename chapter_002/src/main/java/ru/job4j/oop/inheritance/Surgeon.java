@@ -10,4 +10,8 @@ public class Surgeon extends Doctor {
     public int getOperations() {
         return operations;
     }
+
+    public boolean operate(Client client) {
+        return true;
+    }
 }

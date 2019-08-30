@@ -10,4 +10,7 @@ public class Builder extends Engineer {
     public int getBricks() {
         return bricks;
     }
+
+    public void communicateWithClient(Client client) {
+    }
 }
