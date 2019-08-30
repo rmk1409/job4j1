@@ -5,8 +5,8 @@ package ru.job4j.oop.inheritance;
  * Created by roman.pogorelov on 30.08.2019
  */
 public class Tiger extends Predator {
-    public Tiger() {
-        super();
+    public Tiger(String name) {
+        super(name);
         System.out.println(Tiger.class);
     }
 }
