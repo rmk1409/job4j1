@@ -97,23 +97,14 @@ public class Tracker {
      * @return массив заявок с этим key
      */
     public Item[] findByName(String key) {
-        int size = 0;
+        Item[] result = new Item[this.position];
+        int j = 0;
         for (int i = 0; i < this.position; i++) {
             if (key.equals(this.items[i].getName())) {
-                size++;
+                result[j++] = this.items[i];
             }
         }
-        Item[] result = new Item[0];
-        if (size > 0) {
-            result = new Item[size];
-            for (int i = 0, j = 0; i < position; i++) {
-                if (key.equals(this.items[i].getName())) {
-                    result[j] = this.items[i];
-                    j++;
-                }
-            }
-        }
-        return result;
+        return Arrays.copyOf(result, j);
     }
 
     /**
