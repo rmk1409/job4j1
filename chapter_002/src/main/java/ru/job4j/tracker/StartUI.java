@@ -133,8 +133,7 @@ public class StartUI {
         String name = this.input.ask("Введите имя заявки :");
         String desc = this.input.ask("Введите описание заявки :");
         Item item = new Item(name, desc);
-        boolean replace = this.tracker.replace(id, item);
-        System.out.println(String.format("Заявка изменена: %b", replace));
+        System.out.println(this.tracker.replace(id, item) ? "Заявка успешно изменена." : "Заявка не изменена.");
         System.out.println("---------------------------------");
     }
 
@@ -143,8 +142,8 @@ public class StartUI {
      */
     private void deleteItem() {
         System.out.println("------------------- Удаление заявки -----------------");
-        boolean delete = this.tracker.delete(this.input.ask("Введите id редактируемой заявки :"));
-        System.out.println(String.format("Заявка удалена: %b", delete));
+        String id = this.input.ask("Введите id редактируемой заявки :");
+        System.out.println(this.tracker.delete(id) ? "Заявка успешно удалена." : "Заявка не удалена.");
         System.out.println("---------------------------------");
     }
 
