@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * Stub, emulate user.
  * Created by roman.pogorelov on 31.08.2019
@@ -37,5 +39,11 @@ public class StubInput implements Input {
     @Override
     public String ask(String question) {
         return this.value[this.position++];
+    }
+
+    @Override
+    public int ask(String question, List<Integer> range) {
+        // TODO finish someday
+        return 0;
     }
 }
