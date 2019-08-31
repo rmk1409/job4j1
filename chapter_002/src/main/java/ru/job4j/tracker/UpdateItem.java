@@ -3,18 +3,10 @@ package ru.job4j.tracker;
 /**
  * Created by roman.pogorelov on 31.08.2019
  */
-public class UpdateItem implements UserAction {
-    private int key;
-    private String info;
+public class UpdateItem extends BaseAction {
 
     public UpdateItem(int key, String info) {
-        this.key = key;
-        this.info = info;
-    }
-
-    @Override
-    public int key() {
-        return this.key;
+        super(key, info);
     }
 
     @Override
@@ -26,10 +18,5 @@ public class UpdateItem implements UserAction {
         Item item = new Item(name, desc);
         System.out.println(tracker.replace(id, item) ? "Заявка успешно изменена." : "Заявка не изменена.");
         System.out.println("---------------------------------");
-    }
-
-    @Override
-    public String info() {
-        return this.info;
     }
 }
