@@ -7,8 +7,8 @@ public class Triangle implements Shape {
     @Override
     public String draw() {
         StringBuilder builder = new StringBuilder();
-        builder.append("  *");
-        builder.append(" ***");
+        builder.append("  *").append(System.lineSeparator());
+        builder.append(" ***").append(System.lineSeparator());
         builder.append("*****");
         return builder.toString();
     }

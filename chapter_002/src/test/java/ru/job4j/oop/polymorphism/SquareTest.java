@@ -14,7 +14,7 @@ public class SquareTest {
     public void draw() {
         assertThat(new Square().draw(), is(
                 new StringBuilder()
-                        .append("**")
+                        .append("**").append(System.lineSeparator())
                         .append("**")
                         .toString()
                 )
