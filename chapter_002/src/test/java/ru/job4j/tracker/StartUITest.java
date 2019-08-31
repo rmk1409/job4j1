@@ -20,7 +20,6 @@ public class StartUITest {
      */
     private String menu = new StringJoiner(
             System.lineSeparator())
-            .add("Меню.")
             .add("0. Add new item")
             .add("1. Show all items")
             .add("2. Edit item")
@@ -59,7 +58,7 @@ public class StartUITest {
 
     @Test
     public void showAllEmpty() {
-        StartUI ui = new StartUI(new StubInput(new String[]{"1", "6"}), tracker);
+        StartUI ui = new StartUI(new StubInput(new String[]{"1", "y"}), tracker);
         ui.init();
         assertThat(this.out.toString(), is(
                 new StringJoiner(
@@ -69,7 +68,6 @@ public class StartUITest {
                         .add("--------------- Показ всех заявок ---------------")
                         .add("Заявок нет.")
                         .add("---------------------------------")
-                        .add(menu)
                         .toString()
                 )
         );
@@ -81,7 +79,7 @@ public class StartUITest {
         this.tracker.add(first);
         Item second = new Item("alex", "Descr2");
         this.tracker.add(second);
-        StartUI ui = new StartUI(new StubInput(new String[]{"1", "6"}), tracker);
+        StartUI ui = new StartUI(new StubInput(new String[]{"1", "y"}), tracker);
         ui.init();
         assertThat(this.out.toString(), is(
                 new StringJoiner(
@@ -92,7 +90,6 @@ public class StartUITest {
                         .add(String.format("%s %s %s.", first.getId(), first.getName(), first.getDescription()))
                         .add(String.format("%s %s %s.", second.getId(), second.getName(), second.getDescription()))
                         .add("---------------------------------")
-                        .add(menu)
                         .toString()
                 )
         );
@@ -102,7 +99,7 @@ public class StartUITest {
     public void findById() {
         Item first = new Item("alex", "Descr");
         this.tracker.add(first);
-        StartUI ui = new StartUI(new StubInput(new String[]{"4", first.getId(), "6"}), tracker);
+        StartUI ui = new StartUI(new StubInput(new String[]{"4", first.getId(), "y"}), tracker);
         ui.init();
         assertThat(this.out.toString(), is(
                 new StringJoiner(
@@ -112,7 +109,6 @@ public class StartUITest {
                         .add("------------------- Поиск заявки по id -----------------")
                         .add(String.format("Заявка найдена - %s %s %s.", first.getId(), first.getName(), first.getDescription()))
                         .add("---------------------------------")
-                        .add(menu)
                         .toString()
                 )
         );
@@ -126,7 +122,7 @@ public class StartUITest {
         this.tracker.add(second);
         Item third = new Item("max", "Descr3");
         this.tracker.add(third);
-        StartUI ui = new StartUI(new StubInput(new String[]{"5", first.getName(), "6"}), tracker);
+        StartUI ui = new StartUI(new StubInput(new String[]{"5", first.getName(), "y"}), tracker);
         ui.init();
         assertThat(this.out.toString(), is(
                 new StringJoiner(
@@ -137,7 +133,6 @@ public class StartUITest {
                         .add(String.format("%s %s %s.", first.getId(), first.getName(), first.getDescription()))
                         .add(String.format("%s %s %s.", second.getId(), second.getName(), second.getDescription()))
                         .add("---------------------------------")
-                        .add(menu)
                         .toString()
                 )
         );
@@ -145,7 +140,7 @@ public class StartUITest {
 
     @Test
     public void createItem() {
-        StartUI ui = new StartUI(new StubInput(new String[]{"0", "alex", "decr1", "6"}), tracker);
+        StartUI ui = new StartUI(new StubInput(new String[]{"0", "alex", "decr1", "y"}), tracker);
         ui.init();
         Item item = this.tracker.findByName("alex")[0];
         assertThat("alex", is(item.getName()));
@@ -156,7 +151,7 @@ public class StartUITest {
     public void editItem() {
         Item previous = new Item("test1", "Descr");
         this.tracker.add(previous);
-        StartUI ui = new StartUI(new StubInput(new String[]{"2", previous.getId(), "alex", "decr1", "6"}), this.tracker);
+        StartUI ui = new StartUI(new StubInput(new String[]{"2", previous.getId(), "alex", "decr1", "y"}), this.tracker);
         ui.init();
         Item another = this.tracker.findByName("alex")[0];
         assertThat("alex", is(another.getName()));
@@ -167,7 +162,7 @@ public class StartUITest {
     public void deleteItem() {
         Item item = new Item("test1", "Descr");
         this.tracker.add(item);
-        StartUI ui = new StartUI(new StubInput(new String[]{"3", item.getId(), "6"}), this.tracker);
+        StartUI ui = new StartUI(new StubInput(new String[]{"3", item.getId(), "y"}), this.tracker);
         Item find = this.tracker.findById(item.getId());
         assertThat(item, is(find));
         ui.init();
