@@ -43,7 +43,10 @@ public class StubInput implements Input {
 
     @Override
     public int ask(String question, List<Integer> range) {
-        // TODO finish someday
-        return 0;
+        int result = Integer.parseInt(this.value[this.position++]);
+        if (!range.contains(result)) {
+            throw new MenuOutException("Значение не из диапазона");
+        }
+        return result;
     }
 }
