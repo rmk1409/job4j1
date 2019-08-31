@@ -8,41 +8,8 @@ import java.util.List;
  * Created by roman.pogorelov on 30.08.2019
  */
 public class StartUI {
+    private boolean exit = false;
 
-    /**
-     * Константа меню для добавления новой заявки.
-     */
-    private static final String ADD = "0";
-
-    /**
-     * Константа меню для показа всех заявок.
-     */
-    private static final String ALL = "1";
-
-    /**
-     * Константа меню для редактирования заявки.
-     */
-    private static final String EDIT = "2";
-
-    /**
-     * Константа меню для удаления заявки.
-     */
-    private static final String DELETE = "3";
-
-    /**
-     * Константа меню для поиска заявки по id.
-     */
-    private static final String FIND_BY_ID = "4";
-
-    /**
-     * Константа меню для поиска заявок по имени.
-     */
-    private static final String FIND_BY_NAME = "5";
-
-    /**
-     * Константа для выхода из цикла.
-     */
-    private static final String EXIT = "6";
     /**
      * Получение данных от пользователя.
      */
@@ -70,14 +37,14 @@ public class StartUI {
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         List<Integer> range = new ArrayList<>();
-        menu.fillActions();
+        menu.fillActions(this);
         for (int i = 0; i < menu.getActionsLentgh(); i++) {
             range.add(i);
         }
         do {
             menu.show();
             menu.select(input.ask("select:", range));
-        } while (!"y".equals(this.input.ask("Exit?(y): ")));
+        } while (!this.isExit() && !"y".equals(this.input.ask("Exit?(y): ")));
     }
 
     /**
@@ -88,5 +55,13 @@ public class StartUI {
     public static void main(String[] args) {
         new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()
         ).init();
+    }
+
+    public boolean isExit() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 }
