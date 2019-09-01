@@ -10,13 +10,19 @@ public class ConvertList2Array {
     public int[][] toArray(List<Integer> list, int rows) {
         int size = list.size();
         int cells = (int) Math.ceil(size / 1.0 / rows);
-        int[][] array = new int[rows][cells];
-        for (int i = 0, k = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length && k < size; j++) {
-                array[i][j] = list.get(k++);
+        int[][] result = new int[rows][cells];
+        int i = 0, j = 0, k = 0;
+        for (int[] outer : result) {
+            for (int inner : outer) {
+                result[i][j++] = list.get(k++);
+                if (k == size) {
+                    break;
+                }
             }
+            i++;
+            j = 0;
         }
-        return array;
+        return result;
     }
 
     public List<Integer> convert(List<int[]> list) {
