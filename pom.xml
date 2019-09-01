@@ -13,6 +13,7 @@
         <module>puzzle</module>
         <module>chapter_002</module>
         <module>hometask</module>
+        <module>chapter_003</module>
     </modules>
 
     <properties>
