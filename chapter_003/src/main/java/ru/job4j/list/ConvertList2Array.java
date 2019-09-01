@@ -11,16 +11,13 @@ public class ConvertList2Array {
         int size = list.size();
         int cells = (int) Math.ceil(size / 1.0 / rows);
         int[][] result = new int[rows][cells];
-        int i = 0, j = 0, k = 0;
-        for (int[] outer : result) {
-            for (int inner : outer) {
-                result[i][j++] = list.get(k++);
-                if (k == size) {
-                    break;
-                }
+        int i = 0, j = 0;
+        for (Integer number : list) {
+            result[i][j++] = number;
+            if (j == result.length) {
+                j = 0;
+                i++;
             }
-            i++;
-            j = 0;
         }
         return result;
     }
