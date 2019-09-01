@@ -2,6 +2,9 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -44,7 +47,7 @@ public class TrackerTest {
         tracker.add(item4);
         tracker.add(item5);
         assertThat(true, is(tracker.delete(item.getId())));
-        Item[] actual = {item2, item3, item4, item5};
+        List<Item> actual = Arrays.asList(item2, item3, item4, item5);
         assertThat(actual, is(tracker.findAll()));
     }
 
@@ -62,7 +65,7 @@ public class TrackerTest {
         tracker.add(item4);
         tracker.add(item5);
         assertThat(true, is(tracker.delete(item3.getId())));
-        Item[] actual = {item, item2, item4, item5};
+        List<Item> actual = Arrays.asList(item, item2, item4, item5);
         assertThat(actual, is(tracker.findAll()));
     }
 
@@ -80,7 +83,7 @@ public class TrackerTest {
         tracker.add(item4);
         tracker.add(item5);
         assertThat(true, is(tracker.delete(item5.getId())));
-        Item[] actual = {item, item2, item3, item4};
+        List<Item> actual = Arrays.asList(item, item2, item3, item4);
         assertThat(actual, is(tracker.findAll()));
     }
 
@@ -100,7 +103,7 @@ public class TrackerTest {
         tracker.add(item2);
         tracker.add(item3);
         tracker.add(item4);
-        Item[] actual = {item, item2, item3, item4};
+        List<Item> actual = Arrays.asList(item, item2, item3, item4);
         assertThat(actual, is(tracker.findAll()));
     }
 
@@ -114,7 +117,7 @@ public class TrackerTest {
         tracker.add(item);
         tracker.add(item2);
         tracker.add(new Item("test4"));
-        Item[] actual = {item, item2};
+        List<Item> actual = Arrays.asList(item, item2);
         assertThat(actual, is(tracker.findByName(item.getName())));
     }
 

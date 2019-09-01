@@ -42,6 +42,7 @@ public class MenuTracker {
 
     /**
      * Метод заполняет массив.
+     *
      * @param startUI
      */
     public void fillActions(StartUI startUI) {
@@ -67,10 +68,6 @@ public class MenuTracker {
      * Метод выводит на экран меню.
      */
     public void show() {
-        for (UserAction action : this.actions) {
-            if (action != null) {
-                System.out.println(action.info());
-            }
-        }
+        this.actions.forEach(item -> System.out.println(item.info()));
     }
 }

@@ -31,7 +31,7 @@ public class ValidateInputTest {
     @Test
     public void whenInvalidInput() {
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"invalid", "1"})
+                new StubInput(Arrays.asList("invalid", "1"))
         );
         input.ask("Enter", Arrays.asList(0, 1, 2, 3, 4, 5, 6));
         assertThat(
@@ -45,7 +45,7 @@ public class ValidateInputTest {
     @Test
     public void whenWrongNumber() {
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"-500", "1"})
+                new StubInput(Arrays.asList("-500", "1"))
         );
         input.ask("Enter", Arrays.asList(0, 1, 2, 3, 4, 5, 6));
         assertThat(
