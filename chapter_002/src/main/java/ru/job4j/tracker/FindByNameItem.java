@@ -13,7 +13,7 @@ public class FindByNameItem extends BaseAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        System.out.println("------------------- Поиск заявок по имени -----------------");
+        System.out.println("------------------- Search the request by name -----------------");
         List<Item> items = tracker.findByName(input.ask("Введите имя заявки :"));
         if (items.isEmpty()) {
             System.out.println("Заявки не найдены");

@@ -66,8 +66,8 @@ public class StartUITest {
                         System.lineSeparator(), "",
                         System.lineSeparator())
                         .add(menu)
-                        .add("--------------- Показ всех заявок ---------------")
-                        .add("Заявок нет.")
+                        .add("--------------- All requests ---------------")
+                        .add("No any requests.")
                         .add("---------------------------------")
                         .toString()
                 )
@@ -87,7 +87,7 @@ public class StartUITest {
                         System.lineSeparator(), "",
                         System.lineSeparator())
                         .add(menu)
-                        .add("--------------- Показ всех заявок ---------------")
+                        .add("--------------- All requests ---------------")
                         .add(String.format("%s %s %s.", first.getId(), first.getName(), first.getDescription()))
                         .add(String.format("%s %s %s.", second.getId(), second.getName(), second.getDescription()))
                         .add("---------------------------------")
@@ -107,8 +107,8 @@ public class StartUITest {
                         System.lineSeparator(), "",
                         System.lineSeparator())
                         .add(menu)
-                        .add("------------------- Поиск заявки по id -----------------")
-                        .add(String.format("Заявка найдена - %s %s %s.", first.getId(), first.getName(), first.getDescription()))
+                        .add("------------------- Search request by id -----------------")
+                        .add(String.format("Request is found - %s %s %s.", first.getId(), first.getName(), first.getDescription()))
                         .add("---------------------------------")
                         .toString()
                 )
@@ -130,7 +130,7 @@ public class StartUITest {
                         System.lineSeparator(), "",
                         System.lineSeparator())
                         .add(menu)
-                        .add("------------------- Поиск заявок по имени -----------------")
+                        .add("------------------- Search the request by name -----------------")
                         .add(String.format("%s %s %s.", first.getId(), first.getName(), first.getDescription()))
                         .add(String.format("%s %s %s.", second.getId(), second.getName(), second.getDescription()))
                         .add("---------------------------------")

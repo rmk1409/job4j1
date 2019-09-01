@@ -11,5 +11,7 @@ public class Programmer extends Engineer {
         return bugs;
     }
 
-    public Program refactor(Program program) {return new Program();}
+    public Program refactor(Program program) {
+        return new Program();
+    }
 }

@@ -9,7 +9,7 @@ public class EagerInitTracker {
     private EagerInitTracker() {
     }
 
-    public static EagerInitTracker getInstance(){
+    public static EagerInitTracker getInstance() {
         return EagerInitTracker.instance;
     }
 }

@@ -11,5 +11,7 @@ public class Dentist extends Doctor {
         return tooth;
     }
 
-    public Tooth removeTooth(Patient patient) {return new Tooth();}
+    public Tooth removeTooth(Patient patient) {
+        return new Tooth();
+    }
 }

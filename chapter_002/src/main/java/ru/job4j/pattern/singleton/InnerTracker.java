@@ -8,10 +8,10 @@ public class InnerTracker {
     }
 
     public static InnerTracker getInstance() {
-        return Holder.instance;
+        return Holder.INSTANCE;
     }
 
     private static final class Holder {
-        private static final InnerTracker instance = new InnerTracker();
+        private static final InnerTracker INSTANCE = new InnerTracker();
     }
 }

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 public class EnumTrackerTest {
     @Test
-    public void getInstance(){
+    public void getInstance() {
         EnumTracker one = EnumTracker.INSTANCE;
         assertThat(EnumTracker.INSTANCE, is(one));
         assertThat(EnumTracker.INSTANCE, is(one));

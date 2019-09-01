@@ -13,10 +13,10 @@ public class FindAllItem extends BaseAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        System.out.println("--------------- Показ всех заявок ---------------");
+        System.out.println("--------------- All requests ---------------");
         List<Item> all = tracker.findAll();
         if (all.isEmpty()) {
-            System.out.println("Заявок нет.");
+            System.out.println("No any requests.");
         } else {
             all.forEach(item -> System.out.println(String.format("%s %s %s.", item.getId(), item.getName(), item.getDescription())));
         }

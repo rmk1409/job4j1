@@ -1,4 +1,4 @@
-package ru.job4j.chapter_001;
+package ru.job4j.chapter001;
 
 import org.junit.Test;
 
