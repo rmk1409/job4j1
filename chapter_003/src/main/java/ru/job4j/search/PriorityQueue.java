@@ -16,16 +16,19 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        switch (task.getPriority()) {
-            case 1:
-                tasks.addFirst(task);
-                break;
-            case 5:
-                tasks.addLast(task);
-                break;
-            default:
-                tasks.add(tasks.size() >> 1, task);
-                break;
+        int priority = task.getPriority();
+        if (tasks.isEmpty() || priority < tasks.get(0).getPriority()) {
+            tasks.addFirst(task);
+        } else {
+            int index = 0;
+            for (Task item: tasks) {
+                if (priority > item.getPriority()) {
+                    index++;
+                } else {
+                    break;
+                }
+            }
+            tasks.add(index, task);
         }
     }
 
