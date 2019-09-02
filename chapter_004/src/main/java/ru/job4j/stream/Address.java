@@ -1,5 +1,7 @@
 package ru.job4j.stream;
 
+import java.util.Objects;
+
 /**
  * Created by roman.pogorelov on 02.09.2019
  */
@@ -46,5 +48,31 @@ public class Address {
 
     public void setApartment(int apartment) {
         this.apartment = apartment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return home == address.home &&
+                apartment == address.apartment &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(street, address.street);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, street, home, apartment);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", home=" + home +
+                ", apartment=" + apartment +
+                '}';
     }
 }
