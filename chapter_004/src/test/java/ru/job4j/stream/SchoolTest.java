@@ -47,4 +47,15 @@ public class SchoolTest {
         expected.put(bad.getLastName(), bad);
         assertThat(expected, is(this.school.toMap(List.of(good, bad))));
     }
+
+    @Test
+    public void toMapWithDuplicate() {
+        Map<String, Student> expected = new HashMap<>();
+        Student good = new Student(100, "good");
+        Student bad = new Student(10, "bad");
+        Student bad2 = new Student(15, "bad");
+        expected.put(good.getLastName(), good);
+        expected.put(bad.getLastName(), bad);
+        assertThat(expected, is(this.school.toMap(List.of(good, bad, bad2))));
+    }
 }

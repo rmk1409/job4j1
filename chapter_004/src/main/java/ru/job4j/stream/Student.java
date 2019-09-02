@@ -28,27 +28,23 @@ public class Student {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return score == student.score;
+        return Objects.equals(lastName, student.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(lastName);
     }
 
     @Override
     public String toString() {
-        return "Student{"
-                + "score="
-                + score
-                + '}';
+        return "Student{" +
+                "score=" + score +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 
     public String getLastName() {
