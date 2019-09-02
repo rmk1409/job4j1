@@ -19,7 +19,7 @@ public class UserConvertTest {
     public void process() {
         User jon = new User(1, "Jon", "Mck");
         User albert = new User(2, "Albert", "Bryansk");
-        List<User> users = new ArrayList<>(Arrays.asList(jon, albert));
+        List<User> users = List.of(jon, albert);
         HashMap<Integer, User> expected = new HashMap<>();
         expected.put(1, jon);
         expected.put(2, albert);

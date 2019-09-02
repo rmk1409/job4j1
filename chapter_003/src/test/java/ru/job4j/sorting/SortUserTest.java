@@ -17,14 +17,9 @@ public class SortUserTest {
         User user1 = new User(10, "1");
         User user2 = new User(5, "2");
         User user3 = new User(11, "3");
-        Set<User> expected = new TreeSet<>();
-        expected.add(user1);
-        expected.add(user2);
-        expected.add(user3);
-        List<User> list = Arrays.asList(
-                user1, user2, user3
-        );
-        Set<User> actual = new SortUser().sort(list);
+        Set<User> expected = Set.of(user1, user2, user3);
+        List<User> in = List.of(user1, user2, user3);
+        Set<User> actual = new SortUser().sort(in);
         assertThat(expected, is(actual));
     }
 
@@ -34,10 +29,7 @@ public class SortUserTest {
         User user2 = new User(30, "Иван");
         User user3 = new User(20, "Сергей");
         User user4 = new User(25, "Иван");
-        List<User> expected = new ArrayList<>(Arrays.asList(
-                user2, user4, user1, user3
-        ));
-
+        List<User> expected = List.of(user2, user4, user1, user3);
         assertThat(expected, is(new SortUser().sortNameLength(Arrays.asList(user1, user2, user3, user4))));
     }
 
@@ -47,10 +39,7 @@ public class SortUserTest {
         User user2 = new User(30, "Иван");
         User user3 = new User(20, "Сергей");
         User user4 = new User(25, "Иван");
-        List<User> expected = new ArrayList<>(Arrays.asList(
-                user4, user2, user3, user1
-        ));
-
+        List<User> expected = List.of(user4, user2, user3, user1);
         assertThat(expected, is(new SortUser().sortByAllFields(Arrays.asList(user1, user2, user3, user4))));
     }
 }
