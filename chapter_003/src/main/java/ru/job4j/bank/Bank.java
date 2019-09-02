@@ -89,23 +89,24 @@ public class Bank {
      * @return whether it is successful or not
      */
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String dstRequisite, double amount) {
-        boolean result = false;
-        Account src = null;
-        Account dest = null;
-        for (Account account : this.getUserAccounts(srcPassport)) {
-            if (srcRequisite.equals(account.getRequisites())) {
-                src = account;
+        Account src = this.getAccount(srcPassport, srcRequisite);
+        Account dest = this.getAccount(destPassport, dstRequisite);
+        return (src != null) && (src.transferMoney(dest, amount));
+    }
+
+    /**
+     * Method finds Account by passport and requisite.
+     *
+     * @param passport  User data
+     * @param requisite Account data
+     * @return found account or null
+     */
+    private Account getAccount(String passport, String requisite) {
+        Account result = null;
+        for (Account account : this.getUserAccounts(passport)) {
+            if (requisite.equals(account.getRequisites())) {
+                result = account;
             }
-        }
-        for (Account account : this.getUserAccounts(destPassport)) {
-            if (dstRequisite.equals(account.getRequisites())) {
-                dest = account;
-            }
-        }
-        if (src != null && dest != null && amount <= src.getValue()) {
-            src.setValue(src.getValue() - amount);
-            dest.setValue(dest.getValue() + amount);
-            result = true;
         }
         return result;
     }
