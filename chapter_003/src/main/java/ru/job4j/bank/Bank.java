@@ -66,15 +66,12 @@ public class Bank {
      * @return list of all user accounts
      */
     public List<Account> getUserAccounts(String passport) {
-        List<Account> result = Collections.EMPTY_LIST;
-        Optional<Map.Entry<User, List<Account>>> entry = this.users.entrySet()
+        return this.users.entrySet()
                 .stream()
                 .filter(i -> passport.equals(i.getKey().getPassword()))
-                .findFirst();
-        if (entry.isPresent()) {
-            result = entry.get().getValue();
-        }
-        return result;
+                .findFirst()
+                .map(Map.Entry::getValue)
+                .orElse(Collections.emptyList());
     }
 
     /**
