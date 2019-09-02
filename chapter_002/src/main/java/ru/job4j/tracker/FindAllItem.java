@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by roman.pogorelov on 31.08.2019
@@ -12,14 +13,14 @@ public class FindAllItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
-        System.out.println("--------------- All requests ---------------");
+    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        output.accept("--------------- All requests ---------------");
         List<Item> all = tracker.findAll();
         if (all.isEmpty()) {
-            System.out.println("No any requests.");
+            output.accept("No any requests.");
         } else {
-            all.forEach(item -> System.out.println(String.format("%s %s %s.", item.getId(), item.getName(), item.getDescription())));
+            all.forEach(item -> output.accept(String.format("%s %s %s.", item.getId(), item.getName(), item.getDescription())));
         }
-        System.out.println("---------------------------------");
+        output.accept("---------------------------------");
     }
 }

@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by roman.pogorelov on 31.08.2019
@@ -12,14 +13,14 @@ public class FindByNameItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
-        System.out.println("------------------- Search the request by name -----------------");
+    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        output.accept("------------------- Search the request by name -----------------");
         List<Item> items = tracker.findByName(input.ask("Введите имя заявки :"));
         if (items.isEmpty()) {
-            System.out.println("Заявки не найдены");
+            output.accept("Заявки не найдены");
         } else {
-            items.forEach(item -> System.out.println(String.format("%s %s %s.", item.getId(), item.getName(), item.getDescription())));
+            items.forEach(item -> output.accept(String.format("%s %s %s.", item.getId(), item.getName(), item.getDescription())));
         }
-        System.out.println("---------------------------------");
+        output.accept("---------------------------------");
     }
 }
