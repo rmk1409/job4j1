@@ -16,7 +16,7 @@ public class School {
     }
 
     public Map<String, Student> toMap(List<Student> students) {
-        return students.stream().distinct().collect(Collectors.toMap(Student::getLastName, i -> i));
+        return students.stream().collect(Collectors.toMap(Student::getLastName, i -> i, (o1, o2) -> o1));
     }
 
     public List<Student> levelOf(List<Student> students, int bound) {
