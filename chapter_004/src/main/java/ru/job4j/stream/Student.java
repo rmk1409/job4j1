@@ -7,9 +7,15 @@ import java.util.Objects;
  */
 public class Student {
     private int score;
+    private String lastName;
 
     public Student(int score) {
         this.score = score;
+    }
+
+    public Student(int score, String lastName) {
+        this.score = score;
+        this.lastName = lastName;
     }
 
     public int getScore() {
@@ -43,5 +49,13 @@ public class Student {
                 + "score="
                 + score
                 + '}';
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

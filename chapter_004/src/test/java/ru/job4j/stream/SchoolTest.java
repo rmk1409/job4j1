@@ -1,8 +1,11 @@
 package ru.job4j.stream;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -33,5 +36,15 @@ public class SchoolTest {
     public void collectC() {
         List<Student> expected = List.of(new Student(10), new Student(20), new Student(30), new Student(40), new Student(50));
         assertThat(expected, is(this.school.collect(this.data, student -> student.getScore() <= 50)));
+    }
+
+    @Test
+    public void toMap() {
+        Map<String, Student> expected = new HashMap<>();
+        Student good = new Student(100, "good");
+        Student bad = new Student(10, "bad");
+        expected.put(good.getLastName(), good);
+        expected.put(bad.getLastName(), bad);
+        assertThat(expected, is(this.school.toMap(List.of(good, bad))));
     }
 }
