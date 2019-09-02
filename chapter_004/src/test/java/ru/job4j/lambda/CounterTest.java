@@ -34,8 +34,8 @@ public class CounterTest {
         Counter function = new Counter();
         List<Double> result = function.diapason(5, 8, Math::log);
         List<Double> expected = Arrays.asList(1.6D, 1.79D, 1.94D);
-        assertThat(result.get(0), closeTo(expected.get(0), 0.01));
-        assertThat(result.get(1), closeTo(expected.get(1), 0.01));
-        assertThat(result.get(2), closeTo(expected.get(2), 0.01));
+        for (int i = 0; i < result.size(); i++) {
+            assertThat(result.get(i), closeTo(expected.get(i), 0.01));
+        }
     }
 }
