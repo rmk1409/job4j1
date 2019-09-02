@@ -38,12 +38,11 @@ public class Bank {
      * @param account  new account
      */
     public void addAccountToUser(String passport, Account account) {
-        for (Map.Entry<User, List<Account>> entity : this.users.entrySet()) {
-            if (passport.equals(entity.getKey().getPassword())) {
-                entity.getValue().add(account);
-                break;
-            }
-        }
+        this.users.entrySet()
+                .stream()
+                .filter(i -> passport.equals(i.getKey().getPassword()))
+                .findFirst()
+                .ifPresent(i -> i.getValue().add(account));
     }
 
     /**
@@ -53,12 +52,11 @@ public class Bank {
      * @param account  is used for removing
      */
     public void deleteAccountFromUser(String passport, Account account) {
-        for (Map.Entry<User, List<Account>> entity : this.users.entrySet()) {
-            if (passport.equals(entity.getKey().getPassword())) {
-                entity.getValue().remove(account);
-                break;
-            }
-        }
+        this.users.entrySet()
+                .stream()
+                .filter(i -> passport.equals(i.getKey().getPassword()))
+                .findFirst()
+                .ifPresent(i -> i.getValue().remove(account));
     }
 
     /**
@@ -68,12 +66,13 @@ public class Bank {
      * @return list of all user accounts
      */
     public List<Account> getUserAccounts(String passport) {
-        List<Account> result = new ArrayList<>();
-        for (Map.Entry<User, List<Account>> entity : this.users.entrySet()) {
-            if (passport.equals(entity.getKey().getPassword())) {
-                result.addAll(entity.getValue());
-                break;
-            }
+        List<Account> result = Collections.EMPTY_LIST;
+        Optional<Map.Entry<User, List<Account>>> entry = this.users.entrySet()
+                .stream()
+                .filter(i -> passport.equals(i.getKey().getPassword()))
+                .findFirst();
+        if (entry.isPresent()) {
+            result = entry.get().getValue();
         }
         return result;
     }
@@ -102,13 +101,11 @@ public class Bank {
      * @return found account or null
      */
     private Account getAccount(String passport, String requisite) {
-        Account result = null;
-        for (Account account : this.getUserAccounts(passport)) {
-            if (requisite.equals(account.getRequisites())) {
-                result = account;
-            }
-        }
-        return result;
+        return this.getUserAccounts(passport)
+                .stream()
+                .filter(i -> requisite.equals(i.getRequisites()))
+                .findFirst()
+                .orElse(null);
     }
 
     public Map<User, List<Account>> getUsers() {
