@@ -29,7 +29,7 @@ public class SchoolTest {
 
     @Test
     public void collectA() {
-        List<Student> expected = List.of(st8, st9, st10);
+        List<Student> expected = List.of(st10, st8, st9);
         assertThat(expected, is(this.school.collect(this.data, student -> student.getScore() > 70)));
     }
 
@@ -44,7 +44,7 @@ public class SchoolTest {
 
     @Test
     public void collectC() {
-        List<Student> expected = List.of(st1, st2, st3, st4, st5);
+        List<Student> expected = List.of(st2, st4, st5, st3, st1);
         assertThat(expected, is(this.school.collect(this.data, student -> student.getScore() <= 50)));
     }
 
