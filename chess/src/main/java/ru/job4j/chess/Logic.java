@@ -56,8 +56,6 @@ public class Logic {
 
     @Override
     public String toString() {
-        return "Logic{" +
-                "figures=" + Arrays.toString(this.figures) +
-                '}';
+        return "Logic{" + "figures=" + Arrays.toString(this.figures) + '}';
     }
 }
