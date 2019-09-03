@@ -15,11 +15,12 @@
         <module>hometask</module>
         <module>chapter_003</module>
         <module>chapter_004</module>
+        <module>tictactoe</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>12</maven.compiler.source>
-        <maven.compiler.target>12</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
