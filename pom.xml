@@ -17,6 +17,7 @@
         <module>chapter_004</module>
         <module>tictactoe</module>
         <module>chess</module>
+        <module>junior</module>
     </modules>
 
     <properties>
