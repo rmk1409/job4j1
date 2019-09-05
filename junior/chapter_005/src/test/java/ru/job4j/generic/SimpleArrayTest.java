@@ -44,10 +44,10 @@ public class SimpleArrayTest {
         array.add(20);
         array.remove(0);
         array.remove(3);
-        int[] actual1 = {16,17,18,20};
+        int[] actual1 = {16, 17, 18, 20};
         Iterator<Integer> iterator = array.iterator();
         Arrays.stream(actual1)
-                .forEach(i->assertThat(iterator.next(), is(i)));
+                .forEach(i -> assertThat(iterator.next(), is(i)));
         assertFalse(iterator.hasNext());
     }
 

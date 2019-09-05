@@ -24,7 +24,7 @@ public class SimpleStack<T> {
         this.container.add(value);
     }
 
-    public boolean empty(){
+    public boolean empty() {
         return this.container.getSize() == 0;
     }
 }

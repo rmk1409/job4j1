@@ -16,7 +16,7 @@ public class Converter {
                 this.checkIterator();
             }
 
-            private void checkIterator(){
+            private void checkIterator() {
                 if (this.iterator == null || !this.iterator.hasNext()) {
                     while (composite.hasNext()) {
                         Iterator<Integer> current = composite.next();
