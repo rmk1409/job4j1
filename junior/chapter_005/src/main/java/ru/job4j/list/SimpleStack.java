@@ -23,4 +23,8 @@ public class SimpleStack<T> {
     public void push(T value) {
         this.container.add(value);
     }
+
+    public boolean empty(){
+        return this.container.getSize() == 0;
+    }
 }
