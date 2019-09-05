@@ -15,11 +15,11 @@ import java.util.Iterator;
  * Created by roman.pogorelov on 05.09.2019
  */
 public class SimpleArray<T> implements Iterable<T> {
-    private Object[] array;
+    private T[] array;
     private int index = 0;
 
     public SimpleArray(int size) {
-        this.array = new Object[size];
+        this.array = (T[]) new Object[size];
     }
 
     /**
@@ -73,7 +73,7 @@ public class SimpleArray<T> implements Iterable<T> {
         if (index > this.index) {
             throw new ArrayIndexOutOfBoundsException();
         }
-        return (T) this.array[index];
+        return this.array[index];
     }
 
     @Override
@@ -88,7 +88,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public T next() {
-                return (T) array[i++];
+                return array[i++];
             }
         };
     }
