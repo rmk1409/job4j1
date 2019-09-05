@@ -59,8 +59,7 @@ public class SimpleArray<T> implements Iterable<T> {
      */
     public boolean remove(int index) {
         if (index < this.index) {
-            this.index--;
-            System.arraycopy(this.array, index + 1, this.array, index, this.index - index);
+            System.arraycopy(this.array, index + 1, this.array, index, this.index-- - index);
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
