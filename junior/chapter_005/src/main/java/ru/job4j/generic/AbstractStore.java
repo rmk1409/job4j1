@@ -4,7 +4,7 @@ package ru.job4j.generic;
  * TODO Description
  * Created by roman.pogorelov on 05.09.2019
  */
-public class AbstractStore<T extends Base> {
+public class AbstractStore<T extends Base> implements Store<T> {
     private SimpleArray<T> data;
 
     public AbstractStore(int size) {
