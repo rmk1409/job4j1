@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * TODO Description
@@ -45,5 +45,48 @@ public class SimpleLinkedListTest {
         assertThat(list.delete(), is(2));
         assertThat(list.delete(), is(1));
         assertThat(list.getSize(), is(0));
+    }
+
+    @Test
+    public void hasCycleTrue() {
+        SimpleLinkedList.Node first = new SimpleLinkedList.Node(1);
+        SimpleLinkedList.Node second = new SimpleLinkedList.Node(2);
+        SimpleLinkedList.Node third = new SimpleLinkedList.Node(3);
+        SimpleLinkedList.Node fourth = new SimpleLinkedList.Node(4);
+        SimpleLinkedList.Node fifth = new SimpleLinkedList.Node(5);
+        first.setNext(second);
+        second.setNext(third);
+        third.setNext(fourth);
+        fourth.setNext(fifth);
+        fifth.setNext(first);
+        assertTrue(list.hasCycle(first));
+    }
+
+    @Test
+    public void hasCycleInTheMiddleTrue() {
+        SimpleLinkedList.Node first = new SimpleLinkedList.Node(1);
+        SimpleLinkedList.Node second = new SimpleLinkedList.Node(2);
+        SimpleLinkedList.Node third = new SimpleLinkedList.Node(3);
+        SimpleLinkedList.Node fourth = new SimpleLinkedList.Node(4);
+        SimpleLinkedList.Node fifth = new SimpleLinkedList.Node(5);
+        first.setNext(second);
+        second.setNext(third);
+        third.setNext(second);
+        fourth.setNext(fifth);
+        assertTrue(list.hasCycle(first));
+    }
+
+    @Test
+    public void hasCycleFalse() {
+        SimpleLinkedList.Node first = new SimpleLinkedList.Node(1);
+        SimpleLinkedList.Node second = new SimpleLinkedList.Node(2);
+        SimpleLinkedList.Node third = new SimpleLinkedList.Node(3);
+        SimpleLinkedList.Node fourth = new SimpleLinkedList.Node(4);
+        SimpleLinkedList.Node fifth = new SimpleLinkedList.Node(5);
+        first.setNext(second);
+        second.setNext(third);
+        third.setNext(fourth);
+        fourth.setNext(fifth);
+        assertFalse(list.hasCycle(first));
     }
 }
