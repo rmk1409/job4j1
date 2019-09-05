@@ -1,6 +1,6 @@
 package ru.job4j.map.model;
 
-import java.util.Calendar;
+import java.util.*;
 
 /**
  * TODO Description
@@ -39,5 +39,21 @@ public class User {
 
     public void setBirthday(Calendar birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public String toString() {
+        return "User{"
+                + "name='" + name + '\''
+                + ", children=" + children
+                + ", birthday=" + birthday
+                + '}';
+    }
+
+    public static void main(String[] args) {
+        Map<User, Object> map = new HashMap<>();
+        map.put(new User("Ivan", 5, new GregorianCalendar(1987, 9, 14)), "First Value");
+        map.put(new User("Ivan", 5, new GregorianCalendar(1987, 9, 14)), "Second Value");
+        map.forEach((k, v) -> System.out.printf("Key(%s), Value(%s)%n", k, v));
     }
 }
