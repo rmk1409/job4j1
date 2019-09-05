@@ -1,8 +1,6 @@
 package ru.job4j.iterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -10,31 +8,40 @@ import java.util.NoSuchElementException;
  */
 public class Converter {
 
-    Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
+    Iterator<Integer> convert(Iterator<Iterator<Integer>> composite) {
         return new Iterator<>() {
-            private int index = 0;
-            private List<Integer> list = new ArrayList<>();
+            private Iterator<Integer> iterator;
 
             {
-                while (it.hasNext()) {
-                    Iterator<Integer> inner = it.next();
-                    while (inner.hasNext()) {
-                        list.add(inner.next());
+                this.checkIterator();
+            }
+
+            private void checkIterator(){
+                if (this.iterator == null || !this.iterator.hasNext()) {
+                    while (composite.hasNext()) {
+                        Iterator<Integer> current = composite.next();
+                        if (current.hasNext()) {
+                            this.iterator = current;
+                            break;
+                        }
                     }
                 }
             }
 
             @Override
             public boolean hasNext() {
-                return this.index < list.size();
+                return this.iterator != null && this.iterator.hasNext();
             }
 
             @Override
             public Integer next() {
-                if (index == list.size()) {
+                if (!this.hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return list.get(index++);
+
+                Integer result = this.iterator.next();
+                this.checkIterator();
+                return result;
             }
         };
     }
