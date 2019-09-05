@@ -28,11 +28,10 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param model эл-т для добавления
      */
     public void add(T model) {
-        if (this.index < this.array.length) {
-            this.array[this.index++] = model;
-        } else {
+        if (this.index > this.array.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
+        this.array[this.index++] = model;
     }
 
     /**
@@ -43,11 +42,10 @@ public class SimpleArray<T> implements Iterable<T> {
      * @return is setting successful or not
      */
     public boolean set(int index, T model) {
-        if (index < this.index) {
-            this.array[index] = model;
-        } else {
+        if (index > this.index) {
             throw new IllegalArgumentException();
         }
+        this.array[index] = model;
         return true;
     }
 
@@ -58,11 +56,10 @@ public class SimpleArray<T> implements Iterable<T> {
      * @return is deleting successful or not
      */
     public boolean remove(int index) {
-        if (index < this.index) {
-            System.arraycopy(this.array, index + 1, this.array, index, this.index-- - index);
-        } else {
+        if (index > this.index) {
             throw new ArrayIndexOutOfBoundsException();
         }
+        System.arraycopy(this.array, index + 1, this.array, index, this.index-- - index);
         return true;
     }
 
@@ -73,21 +70,10 @@ public class SimpleArray<T> implements Iterable<T> {
      * @return эл-т
      */
     public T get(int index) {
-        if (index < this.index) {
-            return (T) this.array[index];
-        } else {
+        if (index > this.index) {
             throw new ArrayIndexOutOfBoundsException();
         }
-    }
-
-    /**
-     * проверяет выход за границы
-     *
-     * @param index индекс для проверки
-     * @return false, если вышли за пределы
-     */
-    private boolean checkIndex(int index) {
-        return index < this.array.length;
+        return (T) this.array[index];
     }
 
     @Override
