@@ -76,6 +76,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         if (this.container[index] != null) {
             this.container[index] = null;
             this.modCount++;
+            this.size--;
             result = true;
         }
         return result;
