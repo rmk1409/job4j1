@@ -42,6 +42,7 @@ public class DynamicSizeLinkedArray<E> implements Iterable<E> {
         return new Iterator<E>() {
             private int itCount;
             private int itIndex;
+            private Node<E>current =  head;
 
             {
                 this.itCount = modCount;
@@ -56,7 +57,10 @@ public class DynamicSizeLinkedArray<E> implements Iterable<E> {
             @Override
             public E next() {
                 checkModCount();
-                return get(itIndex++);
+                this.itIndex++;
+                E data = current.data;
+                current = current.next;
+                return data;
             }
 
             private void checkModCount() {
