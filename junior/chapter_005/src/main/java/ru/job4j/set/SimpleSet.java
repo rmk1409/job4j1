@@ -3,6 +3,7 @@ package ru.job4j.set;
 import ru.job4j.list.DynamicSizeArray;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Реализовать коллекцию SimpleSet. Коллекция должна обеспечивать void add(E e) и реализовывать Iterable<E>.
@@ -28,7 +29,7 @@ public class SimpleSet<E> implements Iterable<E> {
         Iterator<E> iterator = container.iterator();
         boolean uniqueness = true;
         while (iterator.hasNext()) {
-            if (e.equals(iterator.next())) {
+            if (Objects.equals(iterator.next(), e)) {
                 uniqueness = false;
                 break;
             }
