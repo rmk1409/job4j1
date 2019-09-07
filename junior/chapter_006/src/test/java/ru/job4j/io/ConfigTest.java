@@ -16,7 +16,8 @@ public class ConfigTest {
 
     @Before
     public void init() {
-        this.config = new Config("..\\..\\" + "app.properties");
+//        this.config = new Config("..\\..\\" + "app.properties");
+        this.config = new Config(Config.class.getClassLoader().getResource("app.properties").getFile());
         this.config.load();
     }
 
