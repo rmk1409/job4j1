@@ -31,7 +31,13 @@ public class Tree<T extends Comparable<T>> implements SimpleTree<T> {
         boolean result = false;
         Optional<Node<T>> node = findBy(child);
         if (node.isEmpty()) {
-            findBy(parent).get().leaves().add(new Node<>(child));
+            Optional<Node<T>> parentNode = findBy(parent);
+            Node<T> childNode = new Node<>(child);
+            if (parentNode.isPresent()) {
+                parentNode.get().leaves().add(childNode);
+            } else {
+                this.root = childNode;
+            }
             this.modCount++;
             result = true;
         }
