@@ -57,4 +57,29 @@ public class TreeTest {
         assertThat(iter.next(), is("H"));
         assertFalse(iter.hasNext());
     }
+
+    @Test
+    public void isBinaryFalse() {
+        Tree<String> tree = new Tree<>("C");
+        tree.add("C", "B");
+        tree.add("C", "D");
+        tree.add("C", "F");
+        tree.add("B", "A");
+        tree.add("F", "G");
+        tree.add("F", "I");
+        tree.add("I", "H");
+        assertFalse(tree.isBinary());
+    }
+
+    @Test
+    public void isBinaryTrue() {
+        Tree<String> tree = new Tree<>("C");
+        tree.add("C", "B");
+        tree.add("C", "F");
+        tree.add("B", "A");
+        tree.add("F", "G");
+        tree.add("F", "I");
+        tree.add("I", "H");
+        assertTrue(tree.isBinary());
+    }
 }
