@@ -2,6 +2,8 @@ package ru.job4j.io;
 
 import java.io.File;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * 3. Сканирование файловой системы.[#176767]
@@ -35,24 +37,37 @@ import java.util.*;
  * Created by roman.pogorelov on 07.09.2019
  */
 class Search {
-    List<File> files(String parent, List<String> exts) {
+    public List<File> files(String parent, List<String> exts) {
         List<File> result = new ArrayList<>();
         Queue<File> queue = new LinkedList<>();
         queue.offer(new File(parent));
         while (!queue.isEmpty()) {
             File current = queue.poll();
             if (current.isDirectory()) {
-                Arrays.stream(Objects.requireNonNull(current.listFiles())).forEach(queue::offer);
-            } else {
-                String name = current.getName();
-                int i = name.lastIndexOf('.');
-                if (i > 0) {
-                    String extension = name.substring(i + 1);
-                    boolean accordance = exts.stream().anyMatch(cur -> Objects.equals(extension, cur));
-                    if (accordance) {
-                        result.add(current);
-                    }
-                }
+                this.getDirectoryFiles(current, file -> true)
+                        .forEach(queue::offer);
+            } else if (checkExtension(current, exts)) {
+                result.add(current);
+            }
+        }
+        return result;
+    }
+
+    private List<File> getDirectoryFiles(File directory, Predicate<File> predicate) {
+        return Arrays.stream(Objects.requireNonNull(directory.listFiles()))
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+
+    public boolean checkExtension(File file, List<String> exts) {
+        boolean result = false;
+        String name = file.getName();
+        int i = name.lastIndexOf('.');
+        if (i > 0) {
+            String extension = name.substring(i + 1);
+            boolean accordance = exts.stream().anyMatch(cur -> Objects.equals(extension, cur));
+            if (accordance) {
+                result = true;
             }
         }
         return result;
