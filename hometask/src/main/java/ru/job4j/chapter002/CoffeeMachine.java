@@ -1,6 +1,8 @@
 package ru.job4j.chapter002;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -22,32 +24,37 @@ import java.util.stream.IntStream;
  * @since 04.09.2019
  */
 public class CoffeeMachine {
+    private Integer[] types;
+
+    public CoffeeMachine() {
+        types = new Integer[]{10, 5, 2, 1};
+    }
+
+    public CoffeeMachine(Integer[] types) {
+        this.types = types;
+    }
+
     public int[] changes(int value, int price) {
+        this.checkValideInputData(value, price);
         List<Integer> list = new ArrayList<>();
-        if (price >= 0 && value >= 0 && value >= price) {
-            int changes = value - price;
-            if (changes > 0) {
-                int tens = changes / 10;
-                changes %= 10;
-                int fives = changes / 5;
-                changes %= 5;
-                int twos = changes / 2;
-                changes %= 2;
-                int ones = changes;
-                IntStream.range(0, tens)
-                        .forEach(i -> list.add(10));
-                IntStream.range(0, fives)
-                        .forEach(i -> list.add(5));
-                IntStream.range(0, twos)
-                        .forEach(i -> list.add(2));
-                IntStream.range(0, ones)
-                        .forEach(i -> list.add(1));
+        int changes = value - price;
+        if (changes > 0) {
+            Arrays.sort(types, Collections.reverseOrder());
+            for (Integer type : types) {
+                int quantity = changes / type;
+                changes %= type;
+                IntStream.range(0, quantity)
+                        .forEach(i -> list.add(type));
             }
-        } else {
-            throw new IllegalArgumentException("Please enter appropriate numbers.");
         }
         return list.stream()
                 .mapToInt(i -> i)
                 .toArray();
+    }
+
+    private void checkValideInputData(int value, int price) {
+        if (price < 0 || value < 0 || value < price) {
+            throw new IllegalArgumentException("Please enter appropriate numbers.");
+        }
     }
 }

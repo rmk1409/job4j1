@@ -36,6 +36,13 @@ public class CoffeeMachineTest {
         assertThat(expected, is(this.machine.changes(50, 27)));
     }
 
+    @Test
+    public void changesOtherCoinTypes() {
+        CoffeeMachine machine = new CoffeeMachine(new Integer[]{1, 10});
+        int[] expected = {10, 10, 1, 1, 1};
+        assertThat(expected, is(machine.changes(50, 27)));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void changesException() {
         this.machine.changes(50, 51);
