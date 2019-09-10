@@ -1,6 +1,7 @@
 package ru.job4j.question;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -18,46 +19,43 @@ import java.util.stream.Collectors;
 public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
-        int deleted = this.getDeleted(previous, current);
-        int added = this.getAdded(current.size(), previous.size(), deleted);
-        int changed = this.getChanged(current, previous);
-        return new Info(added, changed, deleted);
-    }
-
-    private int getDeleted(List<User> previous, List<User> current) {
-        return (int) previous.stream()
-                .filter(i -> !current.contains(i))
-                .count();
-    }
-
-    private int getAdded(int current, int previous, int deleted) {
-        return current - previous + deleted;
-    }
-
-    private int getChanged(List<User> current, List<User> previous) {
-        int result = 0;
-        List<User> collect = current.stream()
-                .filter(previous::contains)
-                .collect(Collectors.toList());
-        for (User user : collect) {
-            for (User previousUser : previous) {
-                if (Objects.equals(user.id, previousUser.id)) {
-                    if (!Objects.equals(user.name, previousUser.name)) {
-                        result++;
-                    }
-                    break;
-                }
+        Map<Integer, User> map = previous.stream()
+                .collect(Collectors.toMap(User::getId, i -> i));
+        int changed = 0;
+        int deleted = 0;
+        for (User user : current) {
+            User remove = map.remove(user.getId());
+            if (Objects.isNull(remove)) {
+                deleted++;
+            } else if (!Objects.equals(user.name, remove.name)) {
+                changed++;
             }
         }
-        return result;
+        return new Info(map.size(), changed, deleted);
     }
 
     public static class User {
-        int id;
-        String name;
+        private int id;
+        private String name;
 
         public User(int id, String name) {
             this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
             this.name = name;
         }
 
