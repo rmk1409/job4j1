@@ -89,7 +89,8 @@ public class Sort {
      * @param data   source data
      */
     private void addParents(Set<String> result, String[] data) {
-        Arrays.stream(data).forEach(str -> this.addParent(str, result));
+        Arrays.stream(data)
+                .forEach(str -> this.addParent(str, result));
     }
 
     /**
@@ -100,10 +101,10 @@ public class Sort {
      */
     private void addParent(String str, Set<String> result) {
         int index = str.lastIndexOf('\\');
-        if (index != -1) {
+        while (index != -1) {
             String parent = str.substring(0, index);
             result.add(parent);
-            this.addParent(parent, result);
+            index = parent.lastIndexOf('\\');
         }
     }
 }
