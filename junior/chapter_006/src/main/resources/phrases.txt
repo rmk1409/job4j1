@@ -1,0 +1,7 @@
+"Hi"
+"Hello"
+"Good morning"
+"Good day"
+"Good evening"
+"Whats up?"
+"Is it you?"
