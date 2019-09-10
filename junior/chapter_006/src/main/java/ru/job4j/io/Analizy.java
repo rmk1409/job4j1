@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -48,6 +49,7 @@ public class Analizy {
             String start = "";
             String finish;
             boolean started = false;
+            List<String> result = new ArrayList<>();
             for (String str : lines) {
                 String[] split = str.split(" ");
                 if (!started && (Objects.equals("400", split[0]) || Objects.equals("500", split[0]))) {
@@ -56,14 +58,20 @@ public class Analizy {
                 }
                 if (started && (Objects.equals("200", split[0]) || Objects.equals("300", split[0]))) {
                     finish = split[1];
-                    out.println(String.format("%s;%s", start, finish));
+                    result.add(String.format("%s;%s", start, finish));
                     started = false;
                 }
             }
+            this.writeToFile(out, result);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void writeToFile(PrintWriter out, List<String> result) {
+        result.forEach(out::println);
+    }
+
 
     private String getResourcePath(String source) {
         return Analizy.class.getClassLoader().getResource(source).getFile();
