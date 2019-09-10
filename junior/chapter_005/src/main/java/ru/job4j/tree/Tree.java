@@ -29,13 +29,16 @@ public class Tree<T extends Comparable<T>> implements SimpleTree<T> {
     @Override
     public boolean add(T parent, T child) {
         boolean result = false;
-        Optional<Node<T>> node = findBy(child);
-        if (node.isEmpty()) {
+        boolean uniqueness = findBy(child).isEmpty();
+        if (uniqueness) {
             Optional<Node<T>> parentNode = findBy(parent);
             Node<T> childNode = new Node<>(child);
             if (parentNode.isPresent()) {
                 parentNode.get().leaves().add(childNode);
             } else {
+                if (this.root != null) {
+                    childNode.add(this.root);
+                }
                 this.root = childNode;
             }
             this.modCount++;
