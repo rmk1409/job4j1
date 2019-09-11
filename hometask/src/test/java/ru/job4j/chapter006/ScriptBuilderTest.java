@@ -13,14 +13,7 @@ import static org.junit.Assert.assertThat;
  */
 public class ScriptBuilderTest {
     // 1 - [2, 3], 2 - [4], 3 - [4, 5], 4 - [], 5 - []
-    Map<Integer, List<Integer>> map = Map.of(
-            1, List.of(2, 3)
-            , 2, List.of(4)
-            , 3, List.of(4, 5)
-            , 5, List.of(0)
-            , 4, List.of()
-            , 0, List.of()
-    );
+    Map<Integer, List<Integer>> map = Map.of(1, List.of(2, 3), 2, List.of(4), 3, List.of(4, 5), 5, List.of(0), 4, List.of(), 0, List.of());
 
     @Test
     public void recursiveLoad() {
@@ -30,7 +23,7 @@ public class ScriptBuilderTest {
     }
 
     @Test
-    public void NotRecursiveLoad() {
+    public void notRecursiveLoad() {
         ScriptBuilder scriptBuilder = new ScriptBuilder();
         List<Integer> expected = List.of(0, 5, 4, 3, 2);
         assertThat(scriptBuilder.loadNoRecursion(map, 1), is(expected));
