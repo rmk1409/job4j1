@@ -37,6 +37,13 @@ import java.util.stream.Collectors;
  * Created by roman.pogorelov on 07.09.2019
  */
 class Search {
+    /**
+     * Method returns all files from "parent" directory and which has one of the extensions.
+     *
+     * @param parent root
+     * @param exts   list of the extensions
+     * @return list of the appropriate files
+     */
     public List<File> files(String parent, List<String> exts) {
         List<File> result = new ArrayList<>();
         Queue<File> queue = new LinkedList<>();
@@ -53,12 +60,26 @@ class Search {
         return result;
     }
 
+    /**
+     * Method return list of the files of the given directory, which passed predicate.
+     *
+     * @param directory the given directory
+     * @param predicate is used for filter
+     * @return list of the files
+     */
     private List<File> getDirectoryFiles(File directory, Predicate<File> predicate) {
         return Arrays.stream(Objects.requireNonNull(directory.listFiles()))
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Method checks whether the file has one of the extensions
+     *
+     * @param file is used to check
+     * @param exts list of extensions
+     * @return true of false
+     */
     public boolean checkExtension(File file, List<String> exts) {
         boolean result = false;
         String name = file.getName();
