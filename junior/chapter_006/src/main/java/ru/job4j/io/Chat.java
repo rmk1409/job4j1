@@ -17,20 +17,27 @@ import java.util.stream.Collectors;
  * Created by roman.pogorelov on 10.09.2019
  */
 public class Chat {
-    private String path;
-    private String destination;
-    public static final String STOP = "стоп";
-    public static final String CONTINUE = "продолжить";
-    public static final String END = "закончить";
+    private final String path;
+    private final String destination;
+    public static final String STOP = "stop";
+    public static final String CONTINUE = "continue";
+    public static final String END = "end";
+    private final Scanner scanner;
 
     public Chat(String source, String destination) {
         this.path = Chat.class.getClassLoader().getResource(source).getFile();
         this.destination = destination;
+        this.scanner = new Scanner(System.in);
+    }
+
+    public Chat(String source, String destination, Scanner scanner) {
+        this.path = Chat.class.getClassLoader().getResource(source).getFile();
+        this.destination = destination;
+        this.scanner = scanner;
     }
 
     public void run() {
         List<String> phrases = this.getAllPhrases(this.path);
-        Scanner scanner = new Scanner(System.in);
         String input;
         boolean stop = false;
         boolean exit;
@@ -41,7 +48,7 @@ public class Chat {
             stop = Objects.equals(Chat.STOP, input)
                     || (stop && !Objects.equals(Chat.CONTINUE, input));
             exit = Objects.equals(Chat.END, input);
-            if (!stop && !exit) {
+            if (!(stop || exit)) {
                 String phrase = phrases.get(new Random().nextInt(phrases.size()));
                 log.add(phrase);
                 System.out.println(phrase);
@@ -60,7 +67,7 @@ public class Chat {
 
     private List<String> getAllPhrases(String path) {
         List<String> result = new ArrayList<>();
-        try (BufferedReader read = new BufferedReader(new FileReader(path));) {
+        try (BufferedReader read = new BufferedReader(new FileReader(path))) {
             result = read.lines()
                     .collect(Collectors.toList());
         } catch (IOException e) {
