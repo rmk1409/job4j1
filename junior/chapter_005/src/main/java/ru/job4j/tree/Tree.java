@@ -36,10 +36,12 @@ public class Tree<T extends Comparable<T>> implements SimpleTree<T> {
             if (parentNode.isPresent()) {
                 parentNode.get().leaves().add(childNode);
             } else {
+                Node<T> newNode = new Node<>(parent);
+                newNode.add(childNode);
                 if (this.root != null) {
-                    childNode.add(this.root);
+                    newNode.add(this.root);
                 }
-                this.root = childNode;
+                this.root = newNode;
             }
             this.modCount++;
             result = true;
