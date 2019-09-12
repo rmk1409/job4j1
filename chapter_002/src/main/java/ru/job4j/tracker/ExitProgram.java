@@ -14,7 +14,7 @@ public class ExitProgram extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+    public void execute(Input input, ITracker tracker, Consumer<String> output) {
         this.startUI.setExit(true);
     }
 }

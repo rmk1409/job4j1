@@ -12,7 +12,7 @@ public class DeleteItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+    public void execute(Input input, ITracker tracker, Consumer<String> output) {
         output.accept("------------------- Удаление заявки -----------------");
         String id = input.ask("Введите id редактируемой заявки :");
         output.accept(tracker.delete(id) ? "Заявка успешно удалена." : "Заявка не удалена.");

@@ -20,7 +20,7 @@ public interface UserAction {
      * @param tracker объект типа Tracker
      * @param output
      */
-    void execute(Input input, Tracker tracker, Consumer<String> output);
+    void execute(Input input, ITracker tracker, Consumer<String> output);
 
     /**
      * Метод возвращает информацию о данном пункте меню.

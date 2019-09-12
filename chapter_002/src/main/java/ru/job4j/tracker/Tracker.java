@@ -8,7 +8,7 @@ import java.util.Random;
  * Item storage
  * Created by roman.pogorelov on 30.08.2019
  */
-public class Tracker {
+public class Tracker implements ITracker {
     /**
      * Массив для хранение заявок.
      */

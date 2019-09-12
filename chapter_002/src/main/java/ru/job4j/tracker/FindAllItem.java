@@ -13,7 +13,7 @@ public class FindAllItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer<String> output) {
+    public void execute(Input input, ITracker tracker, Consumer<String> output) {
         output.accept("--------------- All requests ---------------");
         List<Item> all = tracker.findAll();
         if (all.isEmpty()) {
