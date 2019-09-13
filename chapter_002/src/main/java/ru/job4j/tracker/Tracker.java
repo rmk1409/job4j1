@@ -19,6 +19,7 @@ public class Tracker implements ITracker {
      *
      * @param item новая заявка
      */
+    @Override
     public Item add(Item item) {
         item.setId(this.generateId());
         this.items.add(item);
@@ -31,9 +32,9 @@ public class Tracker implements ITracker {
      *
      * @return Уникальный ключ.
      */
-    private String generateId() {
+    private Long generateId() {
         Random rm = new Random();
-        return String.valueOf(rm.nextLong() + System.currentTimeMillis());
+        return rm.nextLong() + System.currentTimeMillis();
     }
 
     /**
@@ -43,7 +44,8 @@ public class Tracker implements ITracker {
      * @param item новая заявка
      * @return результат работы
      */
-    public boolean replace(String id, Item item) {
+    @Override
+    public boolean replace(Long id, Item item) {
         boolean result = false;
         for (int i = 0; i < items.size(); i++) {
             if (id.equals(this.items.get(i).getId())) {
@@ -62,7 +64,8 @@ public class Tracker implements ITracker {
      * @param id для поиска
      * @return удалось ли удалить заявку с указанным id
      */
-    public boolean delete(String id) {
+    @Override
+    public boolean delete(Long id) {
         boolean result = false;
         for (int i = 0; i < items.size(); i++) {
             if (id.equals(items.get(i).getId())) {
@@ -79,20 +82,22 @@ public class Tracker implements ITracker {
      *
      * @return массив с заявками
      */
+    @Override
     public List<Item> findAll() {
         return this.items;
     }
 
     /**
-     * Метод возвращает массив с заявками, с именем key.
+     * Метод возвращает массив с заявками, с именем name.
      *
-     * @param key имя для поиска
-     * @return массив заявок с этим key
+     * @param name имя для поиска
+     * @return массив заявок с этим name
      */
-    public List<Item> findByName(String key) {
+    @Override
+    public List<Item> findByName(String name) {
         List<Item> result = new ArrayList<>();
         for (int i = 0; i < items.size(); i++) {
-            if (key.equals(this.items.get(i).getName())) {
+            if (name.equals(this.items.get(i).getName())) {
                 result.add(this.items.get(i));
             }
         }
@@ -105,7 +110,8 @@ public class Tracker implements ITracker {
      * @param id для поиска
      * @return заявку, если не найдено то null
      */
-    public Item findById(String id) {
+    @Override
+    public Item findById(Long id) {
         Item result = null;
         for (int i = 0; i < this.items.size(); i++) {
             if (id.equals(this.items.get(i).getId())) {

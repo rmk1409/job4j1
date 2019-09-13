@@ -45,7 +45,7 @@ public class StartUITest {
      */
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    private final Consumer<String> output = new Consumer<String>() {
+    private final Consumer<String> output = new Consumer<>() {
         private final PrintStream stdout = new PrintStream(out);
 
         @Override
@@ -110,7 +110,7 @@ public class StartUITest {
     public void findById() {
         Item first = new Item("alex", "Descr");
         this.tracker.add(first);
-        StartUI ui = new StartUI(new StubInput(Arrays.asList("4", first.getId(), "y")), this.tracker, this.output);
+        StartUI ui = new StartUI(new StubInput(Arrays.asList("4", String.valueOf(first.getId()), "y")), this.tracker, this.output);
         ui.init();
         assertThat(this.out.toString(), is(
                 new StringJoiner(
@@ -162,7 +162,7 @@ public class StartUITest {
     public void editItem() {
         Item previous = new Item("test1", "Descr");
         this.tracker.add(previous);
-        StartUI ui = new StartUI(new StubInput(Arrays.asList("2", previous.getId(), "alex", "decr1", "y")), this.tracker, this.output);
+        StartUI ui = new StartUI(new StubInput(Arrays.asList("2", String.valueOf(previous.getId()), "alex", "decr1", "y")), this.tracker, this.output);
         ui.init();
         Item another = this.tracker.findByName("alex").get(0);
         assertThat("alex", is(another.getName()));
@@ -173,7 +173,7 @@ public class StartUITest {
     public void deleteItem() {
         Item item = new Item("test1", "Descr");
         this.tracker.add(item);
-        StartUI ui = new StartUI(new StubInput(Arrays.asList("3", item.getId(), "y")), this.tracker, this.output);
+        StartUI ui = new StartUI(new StubInput(Arrays.asList("3", String.valueOf(item.getId()), "y")), this.tracker, this.output);
         Item find = this.tracker.findById(item.getId());
         assertThat(item, is(find));
         ui.init();

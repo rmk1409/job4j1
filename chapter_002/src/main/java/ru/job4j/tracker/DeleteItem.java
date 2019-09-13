@@ -15,7 +15,7 @@ public class DeleteItem extends BaseAction {
     public void execute(Input input, ITracker tracker, Consumer<String> output) {
         output.accept("------------------- Удаление заявки -----------------");
         String id = input.ask("Введите id редактируемой заявки :");
-        output.accept(tracker.delete(id) ? "Заявка успешно удалена." : "Заявка не удалена.");
+        output.accept(tracker.delete(Long.parseLong(id)) ? "Заявка успешно удалена." : "Заявка не удалена.");
         output.accept("---------------------------------");
     }
 }

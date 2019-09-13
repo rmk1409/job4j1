@@ -89,7 +89,7 @@ public class TrackerTest {
 
     @Test
     public void deleteFalse() {
-        assertThat(false, is(new Tracker().delete("")));
+        assertThat(false, is(new Tracker().delete(-1L)));
     }
 
     @Test
@@ -137,6 +137,6 @@ public class TrackerTest {
 
     @Test
     public void findByIdNull() {
-        assertThat(null, is(new Tracker().findById("")));
+        assertThat(null, is(new Tracker().findById(-1L)));
     }
 }

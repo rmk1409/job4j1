@@ -28,6 +28,14 @@ public class TrackerSQL implements ITracker, AutoCloseable {
                     config.getProperty("username"),
                     config.getProperty("password")
             );
+
+            var script = "CREATE TABLE IF NOT EXISTS item("
+                    + "    id serial primary key,"
+                    + "    name character varying(50) ,"
+                    + "    description character varying(50)"
+                    + ")";
+            Statement st = this.connection.createStatement();
+            st.execute(script);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
@@ -38,28 +46,28 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item add(Item item) {
         int result = 0;
-        try (PreparedStatement statement = this.connection.prepareStatement("insert into item(id, name, description) values(?, ?, ?)")) {
-            item.setId(this.generateId());
-            statement.setString(1, item.getId());
-            statement.setString(2, item.getName());
-            statement.setString(3, item.getDescription());
+        try (PreparedStatement statement = this.connection.prepareStatement("insert into item(name, description) values(?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, item.getName());
+            statement.setString(2, item.getDescription());
             result = statement.executeUpdate();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    item.setId(generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
         return result == 1 ? item : null;
     }
 
-    private String generateId() {
-        Random rm = new Random();
-        return String.valueOf(rm.nextLong() + System.currentTimeMillis());
-    }
-
     @Override
-    public boolean replace(String id, Item item) {
+    public boolean replace(Long id, Item item) {
         int result = 0;
         try (PreparedStatement st = this.connection.prepareStatement("update item set (name, description) = (?, ?) where id = ?")) {
-            st.setString(3, id);
+            st.setLong(3, id);
             st.setString(1, item.getName());
             st.setString(2, item.getDescription());
             result = st.executeUpdate();
@@ -70,10 +78,10 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     }
 
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Long id) {
         int result = 0;
         try (PreparedStatement st = this.connection.prepareStatement("delete from item where id = ?")) {
-            st.setString(1, id);
+            st.setLong(1, id);
             result = st.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
@@ -87,7 +95,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         try (Statement st = this.connection.createStatement(); ResultSet set = st.executeQuery("select * from item")) {
             while (set.next()) {
                 Item item = new Item("");
-                item.setId(set.getString("id"));
+                item.setId(set.getLong("id"));
                 item.setName(set.getString("name"));
                 item.setDescription(set.getString("description"));
                 result.add(item);
@@ -106,7 +114,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             ResultSet set = st.executeQuery();
             while (set.next()) {
                 Item item = new Item(name);
-                item.setId(set.getString("id"));
+                item.setId(set.getLong("id"));
                 item.setDescription(set.getString("description"));
                 result.add(item);
             }
@@ -117,14 +125,14 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     }
 
     @Override
-    public Item findById(String id) {
+    public Item findById(Long id) {
         Item result = null;
         try (PreparedStatement st = this.connection.prepareStatement("select * from item where id = ?")) {
-            st.setString(1, id);
+            st.setLong(1, id);
             ResultSet set = st.executeQuery();
             while (set.next()) {
                 result = new Item("");
-                result.setId(set.getString("id"));
+                result.setId(set.getLong("id"));
                 result.setName(set.getString("name"));
                 result.setDescription(set.getString("description"));
             }
@@ -136,7 +144,9 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        this.connection.close();
+        if (this.connection != null) {
+            this.connection.close();
+        }
     }
 
     public void clearDB() {

@@ -18,7 +18,7 @@ public class UpdateItem extends BaseAction {
         String name = input.ask("Введите имя заявки :");
         String desc = input.ask("Введите описание заявки :");
         Item item = new Item(name, desc);
-        output.accept(tracker.replace(id, item) ? "Заявка успешно изменена." : "Заявка не изменена.");
+        output.accept(tracker.replace(Long.parseLong(id), item) ? "Заявка успешно изменена." : "Заявка не изменена.");
         output.accept("---------------------------------");
     }
 }

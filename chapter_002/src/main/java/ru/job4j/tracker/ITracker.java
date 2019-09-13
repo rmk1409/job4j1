@@ -8,9 +8,9 @@ import java.util.List;
  */
 public interface ITracker {
     Item add(Item item);
-    boolean replace(String id, Item item);
-    boolean delete(String id);
+    boolean replace(Long id, Item item);
+    boolean delete(Long id);
     List<Item> findAll();
-    List<Item> findByName(String key);
-    Item findById(String id);
+    List<Item> findByName(String name);
+    Item findById(Long id);
 }
