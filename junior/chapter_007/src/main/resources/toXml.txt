@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<entries>
+    <entry>
+        <id>0</id>
+    </entry>
+    <entry>
+        <id>1</id>
+    </entry>
+    <entry>
+        <id>2</id>
+    </entry>
+</entries>
