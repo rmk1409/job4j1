@@ -1,8 +1,10 @@
 package ru.job4j.io;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,8 +21,14 @@ import static org.junit.Assert.assertThat;
  * Created by roman.pogorelov on 11.09.2019
  */
 public class ChatTest {
-    private String phrases = "phrases.txt";
-    private String destination = "conversation.txt";
+    private static final String PHRASES = "phrases.txt";
+    private static final String DESTINATION = "conversation.txt";
+    private static final File DEST_FILE = new File(DESTINATION);
+
+    @AfterClass
+    public static void finalization() {
+        DEST_FILE.deleteOnExit();
+    }
 
     @Test
     public void exit() throws IOException {
@@ -32,29 +40,29 @@ public class ChatTest {
         this.testChat("stop\none\ntwo\nthree\nend", List.of("stop", "one", "two", "three", "end"));
     }
 
-    private void testChat(String string, List expected) throws IOException {
-        Scanner scanner = new Scanner(string);
-        Chat chat = new Chat(this.phrases, this.destination, scanner);
-        chat.run();
-        List<String> actual = Files.readAllLines(Paths.get(this.destination));
-        assertThat(actual, is(expected));
-    }
-
     @Test
     public void phrases() throws IOException {
         Scanner scanner = new Scanner("a\nab\nabc\nend");
         List<String> phrases = new BufferedReader(
                 new FileReader(
-                        Chat.class.getClassLoader().getResource(this.phrases).getFile()))
+                        Chat.class.getClassLoader().getResource(ChatTest.PHRASES).getFile()))
                 .lines()
                 .collect(Collectors.toList());
         System.out.println(phrases);
-        Chat chat = new Chat(this.phrases, this.destination, scanner);
+        Chat chat = new Chat(ChatTest.PHRASES, ChatTest.DESTINATION, scanner);
         chat.run();
-        long actual = Files.readAllLines(Paths.get(this.destination))
+        long actual = Files.readAllLines(Paths.get(ChatTest.DESTINATION))
                 .stream()
                 .filter(phrases::contains)
                 .count();
         assertThat(actual, is(3L));
+    }
+
+    private void testChat(String string, List expected) throws IOException {
+        Scanner scanner = new Scanner(string);
+        Chat chat = new Chat(ChatTest.PHRASES, ChatTest.DESTINATION, scanner);
+        chat.run();
+        List<String> actual = Files.readAllLines(Paths.get(ChatTest.DESTINATION));
+        assertThat(actual, is(expected));
     }
 }
