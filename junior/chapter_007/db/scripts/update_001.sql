@@ -1,4 +1,5 @@
-create table if not exists item (
-   id serial primary key not null,
-   name varchar(2000)
-);
+CREATE TABLE IF NOT EXISTS item("
+                    + "    id serial primary key,"
+                    + "    name character varying(50) ,"
+                    + "    description character varying(50)"
+                    + ");
