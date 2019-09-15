@@ -45,12 +45,12 @@ public class StoreSQL implements AutoCloseable {
     private void generateData(int size) {
         try {
             this.connect.setAutoCommit(false);
+            PreparedStatement st = this.connect.prepareStatement("insert into entry(field) values(?);");
             for (int i = 0; i < size; i++) {
-                PreparedStatement st = this.connect.prepareStatement("insert into entry(field) values(?);");
                 st.setInt(1, i);
-                st.executeUpdate();
-                st.close();
+                st.addBatch();
             }
+            st.executeBatch();
             this.connect.commit();
             this.connect.setAutoCommit(true);
         } catch (SQLException e) {
