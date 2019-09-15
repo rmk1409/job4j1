@@ -5,9 +5,9 @@ import org.apache.logging.log4j.Logger;
 import ru.job4j.tracker.ITracker;
 import ru.job4j.tracker.Item;
 
-import java.io.InputStream;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO Description
@@ -16,19 +16,14 @@ import java.util.*;
 public class TrackerSQL implements ITracker, AutoCloseable {
     private static final Logger LOGGER = LogManager.getLogger(TrackerSQL.class);
 
-    private Connection connection;
+    private final Connection connection;
+
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
+    }
 
     public boolean init() {
-        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("driver-class-name"));
-            this.connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-
+        try {
             var script = "CREATE TABLE IF NOT EXISTS item("
                     + "    id serial primary key,"
                     + "    name character varying(50) ,"
