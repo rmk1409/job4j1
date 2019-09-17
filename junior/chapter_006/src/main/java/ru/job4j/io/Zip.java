@@ -53,6 +53,8 @@ public class Zip {
                 case "-o":
                     output = args[++i];
                     break;
+                default:
+                    break;
             }
         }
         Zip zip = new Zip();

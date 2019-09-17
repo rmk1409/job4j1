@@ -66,6 +66,8 @@ public class InteractCalc {
             case 4:
                 Calculator.subtract(first, second);
                 break;
+            default:
+                break;
         }
     }
 
