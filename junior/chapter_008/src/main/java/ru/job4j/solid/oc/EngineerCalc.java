@@ -2,12 +2,21 @@ package ru.job4j.solid.oc;
 
 import ru.job4j.solid.sr.InteractCalc;
 
+import java.util.Scanner;
+
 /**
  * На базе задания из занятия SRP расширить калькулятор. Сделать инженерный калькулятор. Добавить вычисления например тригонометрии.
  * <p>
  * Created by roman.pogorelov on 17.09.2019
  */
 public class EngineerCalc extends InteractCalc {
+    public EngineerCalc() {
+    }
+
+    public EngineerCalc(Scanner scanner) {
+        super(scanner);
+    }
+
     {
         this.menu.add("5. Sin");
         this.menu.add("6. Cos");
