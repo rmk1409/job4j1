@@ -1,9 +1,8 @@
 package ru.job4j.solid.sr;
 
 import ru.job4j.calculator.Calculator;
-import ru.job4j.solid.oc.EngineerCalc;
 
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * Используя класс Calculator.
@@ -16,66 +15,44 @@ import java.util.*;
  */
 public class InteractCalc {
     private Scanner scanner;
-    protected List<String> menu = new ArrayList<>();
-    protected Map<Integer, Operation> operations = new HashMap<>();
+    private String operation;
 
-    {
-        this.menu.add("1. Multiply");
-        this.menu.add("2. Divide");
-        this.menu.add("3. Add");
-        this.menu.add("4. Subtract");
-    }
-
-    {
-        this.operations.put(1, Calculator::multiply);
-        this.operations.put(2, Calculator::div);
-        this.operations.put(3, Calculator::add);
-        this.operations.put(4, Calculator::subtract);
-    }
-
-
-    public InteractCalc() {
-        this.scanner = new Scanner(System.in);
-    }
-
-    public InteractCalc(Scanner scanner) {
+    public InteractCalc(String operation, Scanner scanner) {
+        this.operation = operation;
         this.scanner = scanner;
     }
 
-    /**
-     * Show all operations.
-     */
-    private void showMenu() {
-        this.menu.forEach(System.out::println);
+    public InteractCalc(String operation) {
+        this.operation = operation;
+        this.scanner = new Scanner(System.in);
     }
 
-    /**
-     * Get required user input.
-     *
-     * @param msg to show
-     * @return user input
-     */
-    private int getInput(String msg) {
-        System.out.print(msg);
-        return this.scanner.nextInt();
-    }
-
-    /**
-     * Calculate basic math.
-     */
-    public void run() {
-        this.showMenu();
-        var operation = this.getInput("Choose operation: ");
-        var first = this.getInput("Input a number: ");
-        var second = 0;
-        if (operation > 0 && operation < 5) {
-            second = this.getInput("Input the 2nd number: ");
+    public void calc() {
+        System.out.print("Input a number: ");
+        var first = this.scanner.nextInt();
+        System.out.print("Input the 2nd number: ");
+        var second = this.scanner.nextInt();
+        switch (this.operation) {
+            case "*":
+                Calculator.multiply(first, second);
+                break;
+            case "/":
+                Calculator.div(first, second);
+                break;
+            case "+":
+                Calculator.add(first, second);
+                break;
+            case "-":
+                Calculator.subtract(first, second);
+                break;
+            default:
+                System.exit(0);
+                break;
         }
-        this.operations.get(operation).calc(first, second);
     }
 
     public static void main(String[] args) {
-        InteractCalc cal = new EngineerCalc();
-        cal.run();
+        InteractCalc cal = new InteractCalc("+");
+        cal.calc();
     }
 }
