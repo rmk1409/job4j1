@@ -75,6 +75,7 @@ public class InteractCalc {
     }
 
     public static void main(String[] args) {
-        new InteractCalc().run();
+        InteractCalc cal = new EngineerCalc();
+        cal.run();
     }
 }
