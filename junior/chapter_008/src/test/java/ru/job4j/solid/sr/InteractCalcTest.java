@@ -49,7 +49,7 @@ public class InteractCalcTest {
                 .add("2. Divide")
                 .add("3. Add")
                 .add("4. Subtract")
-                .add("Choose operation: Input 1st number: Input 2nd number: 10.0 * 5.0 = 50.0").add("")
+                .add("Choose operation: Input a number: Input the 2nd number: 10.0 * 5.0 = 50.0").add("")
                 .toString();
         assertThat(this.out.toString(), is(expected));
     }

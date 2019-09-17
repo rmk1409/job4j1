@@ -1,8 +1,9 @@
 package ru.job4j.solid.sr;
 
 import ru.job4j.calculator.Calculator;
+import ru.job4j.solid.oc.EngineerCalc;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Используя класс Calculator.
@@ -15,6 +16,23 @@ import java.util.Scanner;
  */
 public class InteractCalc {
     private Scanner scanner;
+    protected List<String> menu = new ArrayList<>();
+    protected Map<Integer, Operation> operations = new HashMap<>();
+
+    {
+        this.menu.add("1. Multiply");
+        this.menu.add("2. Divide");
+        this.menu.add("3. Add");
+        this.menu.add("4. Subtract");
+    }
+
+    {
+        this.operations.put(1, Calculator::multiply);
+        this.operations.put(2, Calculator::div);
+        this.operations.put(3, Calculator::add);
+        this.operations.put(4, Calculator::subtract);
+    }
+
 
     public InteractCalc() {
         this.scanner = new Scanner(System.in);
@@ -28,10 +46,7 @@ public class InteractCalc {
      * Show all operations.
      */
     private void showMenu() {
-        System.out.println("1. Multiply");
-        System.out.println("2. Divide");
-        System.out.println("3. Add");
-        System.out.println("4. Subtract");
+        this.menu.forEach(System.out::println);
     }
 
     /**
@@ -51,24 +66,12 @@ public class InteractCalc {
     public void run() {
         this.showMenu();
         var operation = this.getInput("Choose operation: ");
-        var first = this.getInput("Input 1st number: ");
-        var second = this.getInput("Input 2nd number: ");
-        switch (operation) {
-            case 1:
-                Calculator.multiply(first, second);
-                break;
-            case 2:
-                Calculator.div(first, second);
-                break;
-            case 3:
-                Calculator.add(first, second);
-                break;
-            case 4:
-                Calculator.subtract(first, second);
-                break;
-            default:
-                break;
+        var first = this.getInput("Input a number: ");
+        var second = 0;
+        if (operation > 0 && operation < 5) {
+            second = this.getInput("Input the 2nd number: ");
         }
+        this.operations.get(operation).calc(first, second);
     }
 
     public static void main(String[] args) {
