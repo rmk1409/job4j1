@@ -8,11 +8,6 @@ public class Warehouse extends Storage {
 
     @Override
     public boolean accept(Food food) {
-        var result = false;
-        if (0.25 > food.getSpoiled()) {
-            this.getStorage().add(food);
-            result = true;
-        }
-        return result;
+        return 0.25 > food.getSpoiled();
     }
 }

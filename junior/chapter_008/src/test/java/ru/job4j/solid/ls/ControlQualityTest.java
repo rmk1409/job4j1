@@ -18,7 +18,7 @@ public class ControlQualityTest {
 
     @Before
     public void init() {
-        this.controlQuality = new ControlQuality(List.of(new Warehouse(), new Shop(), new Trash()));
+        this.controlQuality = new ControlQuality();
     }
 
     @Test

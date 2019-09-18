@@ -8,7 +8,6 @@ public class Trash extends Storage {
 
     @Override
     public boolean accept(Food food) {
-        this.getStorage().add(food);
         return true;
     }
 }

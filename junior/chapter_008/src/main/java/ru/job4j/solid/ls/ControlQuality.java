@@ -1,5 +1,7 @@
 package ru.job4j.solid.ls;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,13 +17,14 @@ import java.util.List;
 public class ControlQuality {
     private List<Storage> storages;
 
-    public ControlQuality(List<Storage> storages) {
-        this.storages = storages;
+    public ControlQuality() {
+        this.storages = new ArrayList<>(Arrays.asList(new Warehouse(), new Shop(), new Trash()));
     }
 
     public void sendProduct(Food food) {
         for (Storage cur : this.storages) {
             if (cur.accept(food)) {
+                cur.add(food);
                 break;
             }
         }

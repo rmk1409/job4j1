@@ -10,6 +10,11 @@ import java.util.List;
 public abstract class Storage implements Store {
     private List<Food> storage = new ArrayList<>();
 
+    @Override
+    public void add(Food food) {
+        this.storage.add(food);
+    }
+
     public List<Food> getStorage() {
         return storage;
     }

@@ -8,16 +8,14 @@ public class Shop extends Storage {
 
     @Override
     public boolean accept(Food food) {
-        var result = false;
-        double spoiled = food.getSpoiled();
-        if (0.75 > spoiled) {
-            this.getStorage().add(food);
-            result = true;
-        } else if (1 > spoiled) {
+        return 1 > food.getSpoiled();
+    }
+
+    @Override
+    public void add(Food food) {
+        if (0.75 < food.getSpoiled()) {
             food.setDiscount(50.0);
-            this.getStorage().add(food);
-            result = true;
         }
-        return result;
+        super.add(food);
     }
 }
