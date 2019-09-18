@@ -14,6 +14,8 @@ public class Food {
     private Date createDate;
     private double price;
     private double discount;
+    private boolean canReproduct;
+    private boolean isVegetable;
 
     public Food(String name, Date expiryDate, Date createDate, double price, double discount) {
         this.name = name;
@@ -21,6 +23,12 @@ public class Food {
         this.createDate = createDate;
         this.price = price;
         this.discount = discount;
+    }
+
+    public Food(String name, Date expiryDate, Date createDate, double price, double discount, boolean canReproduct, boolean isVegetable) {
+        this(name, expiryDate, createDate, price, discount);
+        this.canReproduct = canReproduct;
+        this.isVegetable = isVegetable;
     }
 
     public String getName() {
@@ -69,5 +77,21 @@ public class Food {
         long passed = TimeUnit.DAYS.convert(System.currentTimeMillis() - this.createDate.getTime(), TimeUnit.MILLISECONDS);
         result = passed == 0 ? 0 : passed / 1.0 / period;
         return result;
+    }
+
+    public boolean isCanReproduct() {
+        return canReproduct;
+    }
+
+    public void setCanReproduct(boolean canReproduct) {
+        this.canReproduct = canReproduct;
+    }
+
+    public boolean isVegetable() {
+        return isVegetable;
+    }
+
+    public void setVegetable(boolean vegetable) {
+        isVegetable = vegetable;
     }
 }
