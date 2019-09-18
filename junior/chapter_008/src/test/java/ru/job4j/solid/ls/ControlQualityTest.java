@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Calendar;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -17,7 +18,7 @@ public class ControlQualityTest {
 
     @Before
     public void init() {
-        this.controlQuality = new ControlQuality();
+        this.controlQuality = new ControlQuality(List.of(new Warehouse(), new Shop(), new Trash()));
     }
 
     @Test
@@ -26,7 +27,7 @@ public class ControlQualityTest {
         expiry.add(Calendar.MONTH, 3);
         Food aNew = new Food("new", expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0);
         this.controlQuality.sendProduct(aNew);
-        assertThat(this.controlQuality.getWarehouse().getStorage().size(), is(1));
+        assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(1));
     }
 
     @Test
@@ -37,7 +38,7 @@ public class ControlQualityTest {
         created.add(Calendar.MONTH, -1);
         Food half = new Food("half", expiry.getTime(), created.getTime(), 100.0, 0);
         this.controlQuality.sendProduct(half);
-        assertThat(this.controlQuality.getShop().getStorage().size(), is(1));
+        assertThat(this.controlQuality.getStorages().get(1).getStorage().size(), is(1));
         assertThat(half.getDiscount(), is(0.0));
     }
 
@@ -49,7 +50,7 @@ public class ControlQualityTest {
         created.add(Calendar.MONTH, -3);
         Food discount = new Food("discount", expiry.getTime(), created.getTime(), 100.0, 0);
         this.controlQuality.sendProduct(discount);
-        assertThat(this.controlQuality.getShop().getStorage().size(), is(1));
+        assertThat(this.controlQuality.getStorages().get(1).getStorage().size(), is(1));
         assertThat(discount.getDiscount(), is(50.0));
     }
 
@@ -60,6 +61,6 @@ public class ControlQualityTest {
         created.add(Calendar.MONTH, -3);
         Food trash = new Food("trash", expiry.getTime(), created.getTime(), 100.0, 0);
         this.controlQuality.sendProduct(trash);
-        assertThat(this.controlQuality.getTrash().getStorage().size(), is(1));
+        assertThat(this.controlQuality.getStorages().get(2).getStorage().size(), is(1));
     }
 }

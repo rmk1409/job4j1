@@ -1,6 +1,7 @@
 package ru.job4j.solid.ls;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Создать класс Food сполями. Name, expaireDate, createDate, price, disscount. На основе класса Food создать другие продукты.
@@ -60,5 +61,13 @@ public class Food {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public double getSpoiled() {
+        var result = 0.0;
+        var period = TimeUnit.DAYS.convert(this.expiryDate.getTime() - this.createDate.getTime(), TimeUnit.MILLISECONDS);
+        long passed = TimeUnit.DAYS.convert(System.currentTimeMillis() - this.createDate.getTime(), TimeUnit.MILLISECONDS);
+        result = passed == 0 ? 0 : passed / 1.0 / period;
+        return result;
     }
 }
