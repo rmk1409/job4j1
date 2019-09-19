@@ -1,11 +1,13 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -79,19 +81,22 @@ public class Zip {
         }
     }
 
-    public List<File> seekBy(String root, String ext) {
+    public List<File> seekBy(String root, Predicate<Path> predicate) {
         List<File> result = new ArrayList<>();
 
         try {
             result = Files.walk(Paths.get(root))
                     .filter(Files::isRegularFile)
-                    .map(Path::toString)
-                    .filter(f -> !f.endsWith(ext))
-                    .map(File::new)
+                    .filter(predicate)
+                    .map(Path::toFile)
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public List<File> seekBy(String root, String ext) {
+        return this.seekBy(root, i -> !FileSystems.getDefault().getPathMatcher(ext).matches(i));
     }
 }
