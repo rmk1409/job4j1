@@ -2,27 +2,34 @@ package ru.job4j.solid.isp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.stream.IntStream;
 
 /**
  * TODO Description
  * Created by roman.pogorelov on 18.09.2019
  */
-public class AbstNode implements Composite {
+public class Root implements Composite, Comparable {
     private int level;
     private String name;
     private List<Composite> children = new ArrayList<>();
 
-    public AbstNode(String name, int level) {
+    public Root(String name, int level) {
         this.name = name;
         this.level = level;
     }
 
     @Override
     public void execute() {
-        IntStream.range(0, level).forEach(i -> System.out.print("\t"));
-        System.out.println(this.name);
-        children.forEach(Composite::execute);
+        Queue<Composite> queue = new PriorityQueue<>();
+        queue.offer(this);
+        while (queue.size() > 0) {
+            Composite current = queue.poll();
+            IntStream.range(0, current.getLevel()).forEach(i -> System.out.print("\t"));
+            System.out.println(current.getName());
+            current.getChildren().forEach(queue::offer);
+        }
     }
 
     @Override
@@ -44,7 +51,12 @@ public class AbstNode implements Composite {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return ((Composite) o).getLevel() - this.level;
     }
 }

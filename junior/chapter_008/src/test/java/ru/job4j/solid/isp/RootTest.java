@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
  * TODO Description
  * Created by roman.pogorelov on 18.09.2019
  */
-public class AbstNodeTest {
+public class RootTest {
     /**
      * Вывод в консоль по дефолту
      */
@@ -39,11 +39,11 @@ public class AbstNodeTest {
 
     @Test
     public void test() {
-        AbstNode task1 = new AbstNode("Task 1.", 0);
-        AbstNode task11 = new AbstNode("Task 1.1", 1);
-        AbstNode task111 = new AbstNode("Task 1.1.1", 2);
-        AbstNode task112 = new AbstNode("Task 1.1.2", 2);
-        AbstNode task12 = new AbstNode("Task 1.2", 1);
+        Root task1 = new Root("Task 1.", 0);
+        Root task11 = new Root("Task 1.1", 1);
+        Root task111 = new Root("Task 1.1.1", 2);
+        Root task112 = new Root("Task 1.1.2", 2);
+        Root task12 = new Root("Task 1.2", 1);
         task1.add(task11);
         task1.add(task12);
         task11.add(task111);

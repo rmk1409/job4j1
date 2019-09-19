@@ -11,4 +11,6 @@ public interface Composite {
     void add(Composite node);
     List<Composite> getChildren();
     void invoke();
+    int getLevel();
+    String getName();
 }
