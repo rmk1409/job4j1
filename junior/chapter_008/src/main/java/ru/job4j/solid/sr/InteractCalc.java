@@ -14,8 +14,8 @@ import java.util.Scanner;
  * Created by roman.pogorelov on 17.09.2019
  */
 public class InteractCalc {
-    private Scanner scanner;
-    private String operation;
+    protected Scanner scanner;
+    protected String operation;
 
     public InteractCalc(String operation, Scanner scanner) {
         this.operation = operation;
