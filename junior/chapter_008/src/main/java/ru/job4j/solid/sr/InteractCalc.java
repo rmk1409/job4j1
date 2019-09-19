@@ -14,45 +14,24 @@ import java.util.Scanner;
  * Created by roman.pogorelov on 17.09.2019
  */
 public class InteractCalc {
-    protected Scanner scanner;
-    protected String operation;
+    protected ConsoleInput input;
+    protected Act act;
 
-    public InteractCalc(String operation, Scanner scanner) {
-        this.operation = operation;
-        this.scanner = scanner;
+    public InteractCalc(ConsoleInput input, Act act) {
+        this.input = input;
+        this.act = act;
     }
 
-    public InteractCalc(String operation) {
-        this.operation = operation;
-        this.scanner = new Scanner(System.in);
-    }
-
-    public void calc() {
-        System.out.print("Input a number: ");
-        var first = this.scanner.nextInt();
-        System.out.print("Input the 2nd number: ");
-        var second = this.scanner.nextInt();
-        switch (this.operation) {
-            case "*":
-                Calculator.multiply(first, second);
-                break;
-            case "/":
-                Calculator.div(first, second);
-                break;
-            case "+":
-                Calculator.add(first, second);
-                break;
-            case "-":
-                Calculator.subtract(first, second);
-                break;
-            default:
-                System.exit(0);
-                break;
-        }
+    public void start() {
+        int first = input.askNextInput("Input a number: ");
+        int second = input.askNextInput("Input the 2nd number: ");
+        act.act(first, second);
     }
 
     public static void main(String[] args) {
-        InteractCalc cal = new InteractCalc("+");
-        cal.calc();
+        new InteractCalc(
+                new ConsoleInput(),
+                new AddAct()
+        ).start();
     }
 }

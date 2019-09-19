@@ -41,8 +41,8 @@ public class InteractCalcTest {
     @Test
     public void run() {
         Scanner scanner = new Scanner("10\n5\n");
-        InteractCalc calc = new InteractCalc("*", scanner);
-        calc.calc();
+        InteractCalc calc = new InteractCalc(new ConsoleInput(scanner), new MultiplyAct());
+        calc.start();
         String expected = "Input a number: Input the 2nd number: 10.0 * 5.0 = 50.0".concat(System.lineSeparator());
         assertThat(this.out.toString(), is(expected));
     }
