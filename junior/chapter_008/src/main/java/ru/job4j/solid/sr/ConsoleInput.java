@@ -17,7 +17,7 @@ public class ConsoleInput {
         this.scanner = scanner;
     }
 
-    public int askNextInput(String msg){
+    public int askNextInput(String msg) {
         System.out.print(msg);
         return this.scanner.nextInt();
     }
