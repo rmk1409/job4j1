@@ -1,9 +1,5 @@
 package ru.job4j.solid.ls;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Создать класс обработчик перераспределения продуктов в место использования.
  * <p>
@@ -15,26 +11,33 @@ import java.util.List;
  * Created by roman.pogorelov on 17.09.2019
  */
 public class ControlQuality {
-    private List<Storage> storages;
+    private Storage first;
+
+    public ControlQuality(Storage first) {
+        this.first = first;
+    }
 
     public ControlQuality() {
-        this.storages = new ArrayList<>(Arrays.asList(new Warehouse(), new Shop(), new Trash()));
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        warehouse.setNext(shop);
+        shop.setNext(new Trash());
+        this.first = warehouse;
     }
 
     public void sendProduct(Food food) {
-        for (Storage cur : this.storages) {
-            if (cur.accept(food)) {
-                cur.add(food);
+        Storage current = this.first;
+        while (true) {
+            if (current.accept(food)) {
+                current.add(food);
                 break;
+            } else {
+                current = current.getNext();
             }
         }
     }
 
-    public List<Storage> getStorages() {
-        return storages;
-    }
-
-    public void setStorages(List<Storage> storages) {
-        this.storages = storages;
+    public Storage getFirst() {
+        return first;
     }
 }
