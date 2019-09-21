@@ -8,7 +8,14 @@ import ru.job4j.calculator.Calculator;
  */
 public class SubtractAct implements Act {
     @Override
-    public void act(int... args) {
-        Calculator.subtract(args[0], args[1]);
+    public void act(ConsoleInput input) {
+        int first = input.askNextInput("Input the 1st number: ");
+        int second = input.askNextInput("Input the 2nd number: ");
+        Calculator.subtract(first, second);
+    }
+
+    @Override
+    public String info() {
+        return "Subtract operation";
     }
 }

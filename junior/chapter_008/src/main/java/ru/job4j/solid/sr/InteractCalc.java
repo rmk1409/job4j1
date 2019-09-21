@@ -1,8 +1,6 @@
 package ru.job4j.solid.sr;
 
-import ru.job4j.calculator.Calculator;
-
-import java.util.Scanner;
+import java.util.List;
 
 /**
  * Используя класс Calculator.
@@ -15,23 +13,35 @@ import java.util.Scanner;
  */
 public class InteractCalc {
     protected ConsoleInput input;
-    protected Act act;
+    protected List<Act> acts;
 
-    public InteractCalc(ConsoleInput input, Act act) {
+    public InteractCalc(ConsoleInput input, List<Act> acts) {
         this.input = input;
-        this.act = act;
+        this.acts = acts;
     }
 
     public void start() {
-        int first = input.askNextInput("Input a number: ");
-        int second = input.askNextInput("Input the 2nd number: ");
-        act.act(first, second);
+        if (this.acts.size() > 0) {
+            int choice;
+            do {
+                System.out.println("Choose: ");
+                System.out.println("-1. Exit.");
+                for (int i = 0; i < acts.size(); i++) {
+                    System.out.println(String.format("%d. %s.", i, this.acts.get(i).info()));
+                }
+                choice = this.input.askNextInput("");
+                if (choice != -1) {
+                    this.acts.get(choice).act(this.input);
+                }
+                System.out.println("-----------------------------");
+            } while (choice != -1);
+        }
     }
 
     public static void main(String[] args) {
         new InteractCalc(
                 new ConsoleInput(),
-                new AddAct()
+                List.of(new AddAct(), new DivAct())
         ).start();
     }
 }
