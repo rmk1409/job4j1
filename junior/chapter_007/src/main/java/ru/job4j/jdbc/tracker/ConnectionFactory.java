@@ -12,10 +12,10 @@ import java.util.Properties;
  */
 public class ConnectionFactory {
 
-    public static Connection getConnection() {
+    public static Connection getConnection(String propertiesFileName) {
         Connection result = null;
         Properties properties = new Properties();
-        try (InputStream in = ConnectionFactory.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = ConnectionFactory.class.getClassLoader().getResourceAsStream(propertiesFileName)) {
             properties.load(in);
             Class.forName(properties.getProperty("driver-class-name"));
             result = DriverManager.getConnection(

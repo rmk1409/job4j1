@@ -22,7 +22,7 @@ public class TrackerSQLTest {
 
     @Before
     public void init() throws SQLException {
-        trackerSQL = new TrackerSQL(ConnectionRollback.create(ConnectionFactory.getConnection()));
+        trackerSQL = new TrackerSQL(ConnectionRollback.create(ConnectionFactory.getConnection("app.properties")));
     }
 
     @After
