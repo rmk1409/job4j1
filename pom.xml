@@ -18,6 +18,7 @@
         <module>tictactoe</module>
         <module>chess</module>
         <module>junior</module>
+        <module>middle</module>
     </modules>
 
     <properties>
