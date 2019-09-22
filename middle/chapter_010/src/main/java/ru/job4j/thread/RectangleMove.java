@@ -2,6 +2,7 @@ package ru.job4j.thread;
 
 import javafx.scene.shape.Rectangle;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -19,7 +20,7 @@ public class RectangleMove implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             double currentX = this.rect.getX();
             if (currentX + this.rect.getWidth() >= 300) {
                 this.toTheLeft = true;
@@ -33,7 +34,8 @@ public class RectangleMove implements Runnable {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                log.log(Level.SEVERE, e.getMessage(), e);
             }
         }
     }
