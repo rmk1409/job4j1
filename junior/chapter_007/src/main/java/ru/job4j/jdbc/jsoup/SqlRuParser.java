@@ -81,6 +81,7 @@ public class SqlRuParser {
 
     };
     private String propertiesFileName = "app.properties";
+    private java.sql.Connection connection = ConnectionFactory.getConnection(this.propertiesFileName);
     private Map<String, Vacancy> vacancies = new HashMap<>();
 
     public static void main(String[] args) {
@@ -128,9 +129,7 @@ public class SqlRuParser {
      * Saving all vacancies in DB.
      */
     public void saveInDB() {
-        java.sql.Connection connection = ConnectionFactory.getConnection(this.propertiesFileName);
-        try (connection;
-             PreparedStatement st = connection.prepareStatement("insert into vacancy(name, description, link) values(?,?,?)")
+        try (PreparedStatement st = connection.prepareStatement("insert into vacancy(name, description, link) values(?,?,?)")
         ) {
             connection.setAutoCommit(false);
             for (Map.Entry<String, Vacancy> entry : vacancies.entrySet()) {

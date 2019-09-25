@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * Created by roman.pogorelov on 19.09.2019
  */
 public class Cache {
-    private static final Logger logger = Logger.getLogger(Cache.class.getName());
+    private static final Logger LOG = Logger.getLogger(Cache.class.getName());
     private Map<String, SoftReference<String>> innerStorage = new HashMap<>();
 
     public Map<String, SoftReference<String>> getInnerStorage() {
@@ -47,7 +47,7 @@ public class Cache {
         try {
             lines = Files.readAllLines(Paths.get(Cache.class.getClassLoader().getResource(fileName).toURI()));
         } catch (IOException | URISyntaxException e) {
-            logger.log(Level.ALL, e.getMessage(), e);
+            LOG.log(Level.ALL, e.getMessage(), e);
         }
         return String.join(System.lineSeparator(), lines);
     }
