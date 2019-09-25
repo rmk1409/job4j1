@@ -3,11 +3,15 @@ package ru.job4j.solid.oc;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.solid.sr.ConsoleInput;
 import ru.job4j.solid.sr.InteractCalc;
+import ru.job4j.solid.sr.MultiplyAct;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -41,10 +45,23 @@ public class EngineerCalcTest {
 
     @Test
     public void run() {
-        Scanner scanner = new Scanner("45\n");
-        InteractCalc calc = new EngineerCalc("Tan", scanner);
-        calc.calc();
-        String expected = "Input a number: Tan(45) = 1,00".concat(System.lineSeparator());
+        Scanner scanner = new Scanner("1\n45\n-1");
+        InteractCalc calc = new EngineerCalc(new ConsoleInput(scanner), List.of(new MultiplyAct()), List.of(new TanAct()));
+        calc.start();
+        String expected = new StringJoiner(System.lineSeparator())
+                .add("Choose: ")
+                .add("-1. Exit.")
+                .add("0. Multiply operation.")
+                .add("1. Tan operation.")
+                .add("Input a number: Tan(45) = 1,00")
+                .add("-----------------------------")
+                .add("Choose: ")
+                .add("-1. Exit.")
+                .add("0. Multiply operation.")
+                .add("1. Tan operation.")
+                .add("-----------------------------")
+                .add("")
+                .toString();
         assertThat(this.out.toString(), is(expected));
     }
 }
