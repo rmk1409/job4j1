@@ -5,19 +5,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-import ru.job4j.jdbc.tracker.ConnectionFactory;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,7 +61,7 @@ import java.util.logging.Logger;
  * Created by roman.pogorelov on 19.09.2019
  */
 public class SqlRuParser {
-    private static final Logger LOGGER = Logger.getLogger(SqlRuParser.class.getName());
+    private static final Logger LOG = Logger.getLogger(SqlRuParser.class.getName());
     private static final String URL_PATTERN = "https://www.sql.ru/forum/job-offers/%d";
     private static final String JOB = ".*[Jj]ava.*";
     private static final String JS = ".*[Ss]cript.*";
@@ -81,19 +76,15 @@ public class SqlRuParser {
 
     };
     private String propertiesFileName = "app.properties";
-    private java.sql.Connection connection = ConnectionFactory.getConnection(this.propertiesFileName);
     private Map<String, Vacancy> vacancies = new HashMap<>();
-
-    public static void main(String[] args) {
-        SqlRuParser parser = new SqlRuParser(args[0]);
-        parser.runJob(parser);
-    }
+    private DBStorage db = new DBStorage();
 
     public SqlRuParser() {
     }
 
     public SqlRuParser(String propertiesFileName) {
         this.propertiesFileName = propertiesFileName;
+        db = new DBStorage(propertiesFileName);
     }
 
     /**
@@ -120,52 +111,7 @@ public class SqlRuParser {
                 result = new SimpleDateFormat(DATE_FORMAT, SYMBOLS).parse(stringDate);
             }
         } catch (ParseException e) {
-            LOGGER.log(Level.ALL, e.getMessage(), e);
-        }
-        return result;
-    }
-
-    /**
-     * Saving all vacancies in DB.
-     */
-    public void saveInDB() {
-        try (PreparedStatement st = connection.prepareStatement("insert into vacancy(name, description, link) values(?,?,?)")
-        ) {
-            connection.setAutoCommit(false);
-            for (Map.Entry<String, Vacancy> entry : vacancies.entrySet()) {
-                st.setString(1, entry.getValue().getName());
-                st.setString(2, entry.getValue().getDescription());
-                st.setString(3, entry.getValue().getLink());
-                st.addBatch();
-                st.clearParameters();
-            }
-            st.executeBatch();
-            connection.commit();
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            LOGGER.log(Level.ALL, e.getMessage(), e);
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                LOGGER.log(Level.ALL, e.getMessage(), e);
-            }
-        }
-    }
-
-    /**
-     * Check vacancy table in DB, whether it's empty or not.
-     *
-     * @return whether vacancy table is empty or not
-     */
-    public boolean checkIsFirstRun() {
-        boolean result = false;
-        ResultSet resultSet;
-        try (java.sql.Connection connection = ConnectionFactory.getConnection(propertiesFileName)) {
-            Statement st = connection.createStatement();
-            resultSet = st.executeQuery("select id from vacancy limit 1;");
-            result = resultSet != null && !resultSet.next();
-        } catch (SQLException e) {
-            LOGGER.log(Level.ALL, e.getMessage(), e);
+            LOG.log(Level.ALL, e.getMessage(), e);
         }
         return result;
     }
@@ -179,7 +125,7 @@ public class SqlRuParser {
         try {
             doc = connect.get();
             Date until = new Date();
-            if (this.checkIsFirstRun()) {
+            if (this.db.checkIsFirstRun()) {
                 until.setMonth(0);
                 until.setDate(1);
             } else {
@@ -187,13 +133,13 @@ public class SqlRuParser {
             }
             int last = Integer.parseInt(doc.select("table.sort_options a:last-child").text());
             for (int i = 1; i < last; i++) {
-                if (!this.parseSite(String.format(URL_PATTERN, i), until)) {
+                if (!this.getAllVacanciesFromOnePage(String.format(URL_PATTERN, i), until)) {
                     break;
                 }
             }
             System.out.println(vacancies.size());
         } catch (IOException e) {
-            LOGGER.log(Level.ALL, e.getMessage(), e);
+            LOG.log(Level.ALL, e.getMessage(), e);
         }
     }
 
@@ -206,7 +152,7 @@ public class SqlRuParser {
      * @param until the earliest date to parse
      * @return true - everything in site are parsed, false - reached the earliest date to parse
      */
-    public boolean parseSite(String url, Date until) {
+    public boolean getAllVacanciesFromOnePage(String url, Date until) {
         boolean result = false;
         Connection connect = Jsoup.connect(url);
         try {
@@ -234,40 +180,16 @@ public class SqlRuParser {
                 result = true;
             }
         } catch (IOException e) {
-            LOGGER.log(Level.ALL, e.getMessage(), e);
+            LOG.log(Level.ALL, e.getMessage(), e);
         }
         return result;
     }
 
-    /**
-     * Get schedule from property file and run job.
-     */
-    public void runJob(SqlRuParser parser) {
-        Properties properties = new Properties();
-        try {
-            properties.load(
-                    Objects.requireNonNull(
-                            SqlRuParser.class.getClassLoader().getResourceAsStream(this.propertiesFileName)
-                    )
-            );
-        } catch (IOException e) {
-            LOGGER.log(Level.ALL, e.getMessage(), e);
-        }
-        JobDataMap jobData = new JobDataMap();
-        jobData.put("parser", parser);
-        JobDetail jobDetail = JobBuilder.newJob(ParserJob.class)
-                .usingJobData(jobData).build();
-        Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity("ChronoTrigger")
-                .withSchedule(CronScheduleBuilder.cronSchedule(properties.getProperty("cron.time")))
-                .build();
-        Scheduler scheduler;
-        try {
-            scheduler = StdSchedulerFactory.getDefaultScheduler();
-            scheduler.start();
-            scheduler.scheduleJob(jobDetail, trigger);
-        } catch (SchedulerException e) {
-            LOGGER.log(Level.ALL, e.getMessage(), e);
-        }
+    public String getPropertiesFileName() {
+        return propertiesFileName;
+    }
+
+    public Map<String, Vacancy> getVacancies() {
+        return vacancies;
     }
 }
