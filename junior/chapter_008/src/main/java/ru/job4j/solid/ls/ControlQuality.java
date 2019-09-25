@@ -1,5 +1,6 @@
 package ru.job4j.solid.ls;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,9 @@ import java.util.List;
  * Помните. Вы не можете изменять код первого задания. Только расширять его.
  * <p>
  * Нельзя использовать instanceOf или if ("Shop".equals(storage.getName()))
+ * <p>
+ * Part 3
+ * resort(); должен извлекать все продукты и перераспределять их заново.
  * <p>
  * Created by roman.pogorelov on 17.09.2019
  */
@@ -45,5 +49,22 @@ public class ControlQuality {
 
     public void setStorages(List<Storage> storages) {
         this.storages = storages;
+    }
+
+    /**
+     * Redistributes all food.
+     */
+    public void resort() {
+        List<Food> all = new ArrayList<>();
+        this.storages
+                .stream()
+                .map(Storage::getStorage)
+                .forEach(
+                        storage -> {
+                            all.addAll(storage);
+                            storage.clear();
+                        }
+                );
+        all.forEach(this::sendProduct);
     }
 }

@@ -98,4 +98,22 @@ public class ControlQualityTest {
         assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(1));
         assertThat(this.controlQuality.getStorages().get(3).getStorage().size(), is(1));
     }
+
+    @Test
+    public void resort() {
+        Calendar expiry = Calendar.getInstance();
+        expiry.add(Calendar.MONTH, 3);
+        Food product = new Food("new", expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0);
+        this.controlQuality.sendProduct(product);
+        assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(1));
+        Calendar created = Calendar.getInstance();
+        created.add(Calendar.MONTH, -1);
+        product.setCreateDate(created.getTime());
+        assertThat(this.controlQuality.getStorages().get(1).getStorage().size(), is(0));
+        assertThat(product.getDiscount(), is(0.0));
+        this.controlQuality.resort();
+        assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(0));
+        assertThat(this.controlQuality.getStorages().get(1).getStorage().size(), is(1));
+        assertThat(product.getDiscount(), is(0.0));
+    }
 }
