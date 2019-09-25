@@ -64,38 +64,38 @@ public class ControlQualityTest {
         assertThat(this.controlQuality.getStorages().get(2).getStorage().size(), is(1));
     }
 
-//    @Test
-//    public void checkMoreSpace() {
-//        this.controlQuality = new MoreSpaceControlQuality(this.controlQuality);
-//        for (int i = 0; i < 11; i++) {
-//            Calendar expiry = Calendar.getInstance();
-//            expiry.add(Calendar.MONTH, 3);
-//            this.controlQuality.sendProduct(new Food("new " + i, expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0));
-//        }
-//        assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(10));
-//        assertThat(this.controlQuality.getStorages().get(3).getStorage().size(), is(1));
-//    }
-//
-//    @Test
-//    public void checkReproduction() {
-//        this.controlQuality = new ReproductControlQuality(this.controlQuality);
-//        Calendar expiry = Calendar.getInstance();
-//        Calendar created = Calendar.getInstance();
-//        created.add(Calendar.MONTH, -3);
-//        this.controlQuality.sendProduct(new Food("trash", expiry.getTime(), created.getTime(), 100.0, 0, true, false));
-//        this.controlQuality.sendProduct(new Food("trash", expiry.getTime(), created.getTime(), 100.0, 0, false, false));
-//        assertThat(this.controlQuality.getStorages().get(2).getStorage().size(), is(1));
-//        assertThat(this.controlQuality.getStorages().get(3).getStorage().size(), is(1));
-//    }
-//
-//    @Test
-//    public void checkVegetables() {
-//        this.controlQuality = new FridgeControlQuality(this.controlQuality);
-//        Calendar expiry = Calendar.getInstance();
-//        expiry.add(Calendar.MONTH, 3);
-//        this.controlQuality.sendProduct(new Food("trash", expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0, true, true));
-//        this.controlQuality.sendProduct(new Food("trash", expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0, false, false));
-//        assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(1));
-//        assertThat(this.controlQuality.getStorages().get(3).getStorage().size(), is(1));
-//    }
+    @Test
+    public void checkMoreSpace() {
+        this.controlQuality = new MoreSpaceControlQuality(this.controlQuality);
+        for (int i = 0; i < 11; i++) {
+            Calendar expiry = Calendar.getInstance();
+            expiry.add(Calendar.MONTH, 3);
+            this.controlQuality.sendProduct(new Food("new " + i, expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0));
+        }
+        assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(10));
+        assertThat(this.controlQuality.getStorages().get(3).getStorage().size(), is(1));
+    }
+
+    @Test
+    public void checkReproduction() {
+        this.controlQuality = new ReproductionControlQuality(this.controlQuality);
+        Calendar expiry = Calendar.getInstance();
+        Calendar created = Calendar.getInstance();
+        created.add(Calendar.MONTH, -3);
+        this.controlQuality.sendProduct(new Food("trash", expiry.getTime(), created.getTime(), 100.0, 0, true, false));
+        this.controlQuality.sendProduct(new Food("trash2", expiry.getTime(), created.getTime(), 100.0, 0, false, false));
+        assertThat(this.controlQuality.getStorages().get(3).getStorage().size(), is(1));
+        assertThat(this.controlQuality.getStorages().get(2).getStorage().size(), is(1));
+    }
+
+    @Test
+    public void checkVegetables() {
+        this.controlQuality = new FridgeControlQuality(this.controlQuality);
+        Calendar expiry = Calendar.getInstance();
+        expiry.add(Calendar.MONTH, 3);
+        this.controlQuality.sendProduct(new Food("trash", expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0, true, true));
+        this.controlQuality.sendProduct(new Food("trash", expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0, false, false));
+        assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(1));
+        assertThat(this.controlQuality.getStorages().get(3).getStorage().size(), is(1));
+    }
 }

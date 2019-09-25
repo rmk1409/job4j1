@@ -1,9 +1,11 @@
 package ru.job4j.solid.ls;
 
-import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
- * TODO Description
+ * Еще одно требование. Овощи пришедшие на обработку и попадающие на клад. Должны храниться в специальном складе с низкой температурой. Ваши решения.
+ * <p>
  * Created by roman.pogorelov on 18.09.2019
  */
 public class FridgeControlQuality extends ControlQuality {
@@ -11,8 +13,12 @@ public class FridgeControlQuality extends ControlQuality {
     private Storage fridge = new Trash();
 
     public FridgeControlQuality(ControlQuality controlQuality) {
+        super(controlQuality.getStorages());
         this.controlQuality = controlQuality;
-        this.controlQuality.getStorages().add(fridge);
+        this.setStorages(
+                Stream.concat(this.getStorages().stream(), Stream.of(this.fridge))
+                        .collect(Collectors.toList())
+        );
     }
 
     @Override
@@ -22,10 +28,5 @@ public class FridgeControlQuality extends ControlQuality {
         } else {
             this.controlQuality.sendProduct(food);
         }
-    }
-
-    @Override
-    public List<Storage> getStorages() {
-        return this.controlQuality.getStorages();
     }
 }
