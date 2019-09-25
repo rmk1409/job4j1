@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 public class RectangleMove implements Runnable {
     private static final Logger LOG = Logger.getLogger(RectangleMove.class.getName());
     private final Rectangle rect;
-    private boolean toTheLeft;
 
     public RectangleMove(Rectangle rect) {
         this.rect = rect;
@@ -20,16 +19,17 @@ public class RectangleMove implements Runnable {
 
     @Override
     public void run() {
+        var toTheLeft = false;
         while (!Thread.currentThread().isInterrupted()) {
-            double currentX = this.rect.getX();
-            if (currentX + this.rect.getWidth() >= 300) {
-                this.toTheLeft = true;
+            var currentX = this.rect.getX();
+            if ((currentX + this.rect.getWidth()) >= 300) {
+                toTheLeft = true;
                 LOG.info("Turn to the left");
             } else if (currentX <= 0) {
-                this.toTheLeft = false;
+                toTheLeft = false;
                 LOG.info("Turn to the right");
             }
-            double newX = this.toTheLeft ? currentX - 1 : currentX + 1;
+            var newX = toTheLeft ? currentX - 1 : currentX + 1;
             this.rect.setX(newX);
             try {
                 Thread.sleep(50);
