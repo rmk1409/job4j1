@@ -49,6 +49,10 @@ public class SimpleBlockingQueue<T> {
     private Queue<T> queue;
     private int capacity;
 
+    public SimpleBlockingQueue() {
+        this(10);
+    }
+
     public SimpleBlockingQueue(int capacity) {
         this.capacity = capacity;
         this.queue = new LinkedList<>();
@@ -66,6 +70,7 @@ public class SimpleBlockingQueue<T> {
                 this.wait();
             } catch (InterruptedException e) {
                 LOG.log(Level.SEVERE, e.getMessage(), e);
+                return;
             }
         }
         this.queue.offer(value);
@@ -78,18 +83,18 @@ public class SimpleBlockingQueue<T> {
      *
      * @return a value
      */
-    public synchronized T poll() {
+    public synchronized T poll() throws InterruptedException {
         while (this.queue.size() == 0) {
             LOG.info(String.format("Queue is empty, consumer(%d) please wait.", Thread.currentThread().hashCode()));
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                LOG.log(Level.SEVERE, e.getMessage(), e);
-            }
+            this.wait();
         }
         T element = this.queue.poll();
         LOG.info(String.format("Got value from the queue - %d", element));
         return element;
+    }
+
+    public synchronized boolean isEmpty() {
+        return this.queue.isEmpty();
     }
 }
 
@@ -105,7 +110,13 @@ class Consumer implements Runnable {
     public void run() {
         for (int i = 0; i < 5; i++) {
             LOG.info(String.format("Consumer(%d) is trying to get a new value", this.hashCode()));
-            Integer element = this.queue.poll();
+            Integer element;
+            try {
+                element = this.queue.poll();
+            } catch (InterruptedException e) {
+                LOG.log(Level.SEVERE, e.getMessage(), e);
+                break;
+            }
             LOG.info(String.format("Consumer(%d) got the value - %d", this.hashCode(), element));
             Thread.yield();
         }
