@@ -74,7 +74,7 @@ public class SimpleBlockingQueue<T> {
             }
         }
         this.queue.offer(value);
-        LOG.info(String.format("Value in the queue - %d", value));
+        LOG.info("Value in the queue - " + value);
         this.notify();
     }
 
@@ -84,12 +84,13 @@ public class SimpleBlockingQueue<T> {
      * @return a value
      */
     public synchronized T poll() throws InterruptedException {
-        while (this.queue.size() == 0) {
+        while (this.queue.isEmpty()) {
             LOG.info(String.format("Queue is empty, consumer(%d) please wait.", Thread.currentThread().hashCode()));
             this.wait();
         }
         T element = this.queue.poll();
-        LOG.info(String.format("Got value from the queue - %d", element));
+        LOG.info("Got value from the queue - " + element);
+        this.notifyAll();
         return element;
     }
 
