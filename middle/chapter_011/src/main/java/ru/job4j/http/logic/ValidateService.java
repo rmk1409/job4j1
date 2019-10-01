@@ -1,6 +1,7 @@
 package ru.job4j.http.logic;
 
 import ru.job4j.http.model.User;
+import ru.job4j.http.persistent.DBStore;
 import ru.job4j.http.persistent.MemoryStore;
 import ru.job4j.http.persistent.Store;
 
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class ValidateService implements Store {
     private final static Store INSTANCE = new ValidateService();
-    private final Store persistent = MemoryStore.getInstance();
+    private final Store persistent = DBStore.getInstance();
 
     private ValidateService() {
     }
