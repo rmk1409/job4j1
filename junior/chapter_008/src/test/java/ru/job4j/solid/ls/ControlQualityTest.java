@@ -45,9 +45,9 @@ public class ControlQualityTest {
     @Test
     public void checkDiscountShop() {
         Calendar expiry = Calendar.getInstance();
-        expiry.add(Calendar.MONTH, 1);
+        expiry.add(Calendar.YEAR, 1);
         Calendar created = Calendar.getInstance();
-        created.add(Calendar.MONTH, -3);
+        created.add(Calendar.YEAR, -4);
         Food discount = new Food("discount", expiry.getTime(), created.getTime(), 100.0, 0);
         this.controlQuality.sendProduct(discount);
         assertThat(this.controlQuality.getStorages().get(1).getStorage().size(), is(1));
@@ -102,12 +102,12 @@ public class ControlQualityTest {
     @Test
     public void resort() {
         Calendar expiry = Calendar.getInstance();
-        expiry.add(Calendar.MONTH, 3);
+        expiry.add(Calendar.YEAR, 3);
         Food product = new Food("new", expiry.getTime(), Calendar.getInstance().getTime(), 100.0, 0);
         this.controlQuality.sendProduct(product);
         assertThat(this.controlQuality.getStorages().get(0).getStorage().size(), is(1));
         Calendar created = Calendar.getInstance();
-        created.add(Calendar.MONTH, -1);
+        created.add(Calendar.YEAR, -1);
         product.setCreateDate(created.getTime());
         assertThat(this.controlQuality.getStorages().get(1).getStorage().size(), is(0));
         assertThat(product.getDiscount(), is(0.0));
