@@ -81,8 +81,9 @@ public class Wget {
      */
     private int checkLimit(int speed, int downloaded) throws InterruptedException {
         if (downloaded >= speed) {
-            LOG.info("Sleep");
-            Thread.sleep(1_000);
+            int quantity = (1000 * (downloaded - speed) / speed);
+            LOG.info(String.format("Sleep %.3f seconds", quantity / 1000.0));
+            Thread.sleep(quantity);
             downloaded = 0;
         }
         return downloaded;
