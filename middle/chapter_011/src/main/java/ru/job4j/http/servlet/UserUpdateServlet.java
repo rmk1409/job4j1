@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,27 +26,8 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        User user = this.logic.findById(Long.parseLong(req.getParameter("id")));
-        writer.println(String.format("<!DOCTYPE html>\n"
-                + "<html lang=\"en\">\n"
-                + "<head>\n"
-                + "    <meta charset=\"UTF-8\">\n"
-                + "    <title>Update user</title>\n"
-                + "</head>\n"
-                + "<body>\n"
-                + "     <form action = '%1$s/edit' method='post'>"
-                + "         name: <input type='text' name='name' value='%2$s'><br>"
-                + "         login: <input type='text' name='login' value='%3$s'><br>"
-                + "         email: <input type='text' name='email' value='%4$s'><br>"
-                + "         <input type='hidden' name='id' value='%5$d'>"
-                + "         <input type='hidden' name='createdDate' value='%6$s'>"
-                + "         <input type='submit'>"
-                + "     </form>"
-                + "</body>\n"
-                + "</html>", req.getContextPath(), user.getName(), user.getLogin(), user.getEmail(), user.getId(), user.getCreateDate().toString()));
-        writer.flush();
+        req.getRequestDispatcher("WEB-INF/update.jsp")
+                .forward(req, resp);
     }
 
     @Override
@@ -65,6 +45,6 @@ public class UserUpdateServlet extends HttpServlet {
         }
         User user = new User(id, name, login, email, createdDate);
         this.logic.update(user);
-        resp.sendRedirect(req.getContextPath() + "/list");
+        resp.sendRedirect(req.getContextPath() + "/index.jsp");
     }
 }
