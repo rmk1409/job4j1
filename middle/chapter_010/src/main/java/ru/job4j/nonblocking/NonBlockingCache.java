@@ -56,10 +56,9 @@ public class NonBlockingCache {
         this.container.computeIfPresent(model.id, (k, v) -> {
             if (v.version == (++model.version)) {
                 throw new OptimisticException("Optimistic lock is working");
-            } else {
-                Thread.yield();
-                return model;
             }
+            Thread.yield();
+            return model;
         });
     }
 
