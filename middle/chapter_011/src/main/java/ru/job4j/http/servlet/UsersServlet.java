@@ -22,8 +22,14 @@ public class UsersServlet extends HttpServlet {
     private final Store logic = ValidateService.getInstance();
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("users", this.logic.findAll());
+        req.getRequestDispatcher("WEB-INF/view/index.jsp").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.logic.delete(Long.parseLong(req.getParameter("id")));
-        resp.sendRedirect(req.getContextPath() + "/index.jsp");
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

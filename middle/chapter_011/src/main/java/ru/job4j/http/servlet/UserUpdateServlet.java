@@ -26,7 +26,8 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/update.jsp")
+        req.setAttribute("user", logic.findById(Long.parseLong(req.getParameter("id"))));
+        req.getRequestDispatcher("WEB-INF/view/update.jsp")
                 .forward(req, resp);
     }
 
@@ -45,6 +46,6 @@ public class UserUpdateServlet extends HttpServlet {
         }
         User user = new User(id, name, login, email, createdDate);
         this.logic.update(user);
-        resp.sendRedirect(req.getContextPath() + "/index.jsp");
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

@@ -26,6 +26,6 @@ public class UserCreateServlet extends HttpServlet {
         String email = req.getParameter("email");
         User user = new User(name, login, email);
         logic.add(user);
-        resp.sendRedirect(req.getContextPath() + "/index.jsp");
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }
