@@ -13,25 +13,29 @@ public class User {
     private long id;
     private String name;
     private String login;
+    private String password;
     private String email;
+    private String role;
     private Date createDate;
 
     public User() {
     }
 
     public User(String name, String login, String email) {
-        this.id = ++globalId;
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.createDate = new Date();
+        this(++globalId, name, login, email, new Date());
     }
 
     public User(long id, String name, String login, String email, Date createDate) {
+        this(id, name, login, "password", email, "everyone", createDate);
+    }
+
+    public User(long id, String name, String login, String password, String email, String role, Date createDate) {
         this.id = id;
         this.name = name;
         this.login = login;
+        this.password = password;
         this.email = email;
+        this.role = role;
         this.createDate = createDate;
     }
 
@@ -75,13 +79,31 @@ public class User {
         this.createDate = createDate;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "User{"
                 + "id=" + id
                 + ", name='" + name + '\''
                 + ", login='" + login + '\''
+                + ", password='" + password + '\''
                 + ", email='" + email + '\''
+                + ", role='" + role + '\''
                 + ", createDate=" + createDate
                 + '}';
     }

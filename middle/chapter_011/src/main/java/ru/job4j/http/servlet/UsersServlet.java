@@ -4,6 +4,7 @@ import ru.job4j.http.logic.ValidateService;
 import ru.job4j.http.persistent.Store;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,12 +19,13 @@ import java.io.IOException;
  * <p>
  * Created by roman.pogorelov on 30.09.2019
  */
+@WebServlet
 public class UsersServlet extends HttpServlet {
     private final Store logic = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("users", this.logic.findAll());
+        req.getSession().setAttribute("users", this.logic.findAll());
         req.getRequestDispatcher("WEB-INF/view/index.jsp").forward(req, resp);
     }
 

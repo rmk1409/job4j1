@@ -50,12 +50,14 @@ public class DBStore implements Store {
     @Override
     public void add(User user) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement st = connection.prepareStatement("INSERT INTO users(name, login, email, createddate) VALUES(?,?,?,?);")
+             PreparedStatement st = connection.prepareStatement("INSERT INTO users(name, login, email, createddate, role, password) VALUES(?, ?, ?, ?, ?, ?);")
         ) {
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
-            st.setDate(4, new java.sql.Date(user.getCreateDate().getTime()));
+            st.setTimestamp(4, new java.sql.Timestamp(user.getCreateDate().getTime()));
+            st.setString(5, user.getRole());
+            st.setString(6, user.getPassword());
             st.executeUpdate();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
@@ -65,11 +67,13 @@ public class DBStore implements Store {
     @Override
     public void update(User user) {
         try (Connection con = SOURCE.getConnection();
-             PreparedStatement st = con.prepareStatement("UPDATE users SET name = ?, login = ?, email = ? WHERE ID = ?")) {
+             PreparedStatement st = con.prepareStatement("UPDATE users SET name = ?, login = ?, email = ?, role = ?, password = ? WHERE ID = ?")) {
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
-            st.setLong(4, user.getId());
+            st.setString(4, user.getRole());
+            st.setString(5, user.getPassword());
+            st.setLong(6, user.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
@@ -96,12 +100,7 @@ public class DBStore implements Store {
             ResultSet set = st.executeQuery();
             while (set.next()) {
                 long id = set.getLong("id");
-                String name = set.getString("name");
-                String login = set.getString("login");
-                String email = set.getString("email");
-                java.util.Date date = new java.util.Date(set.getDate("createddate").getTime());
-                User user = new User(id, name, login, email, date);
-                users.add(user);
+                users.add(this.collectUser(id, set));
             }
         } catch (SQLException e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
@@ -117,15 +116,21 @@ public class DBStore implements Store {
             st.setLong(1, id);
             ResultSet set = st.executeQuery();
             if (set.next()) {
-                String name = set.getString("name");
-                String login = set.getString("login");
-                String email = set.getString("email");
-                java.util.Date date = new java.util.Date(set.getDate("createddate").getTime());
-                user = new User(id, name, login, email, date);
+                user = this.collectUser(id, set);
             }
         } catch (SQLException e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
         }
         return user;
+    }
+
+    private User collectUser(long id, ResultSet set) throws SQLException {
+        String name = set.getString("name");
+        String login = set.getString("login");
+        String email = set.getString("email");
+        String role = set.getString("role");
+        String password = set.getString("password");
+        java.util.Date date = new java.util.Date(set.getTimestamp("createddate").getTime());
+        return new User(id, name, login, password, email, role, date);
     }
 }

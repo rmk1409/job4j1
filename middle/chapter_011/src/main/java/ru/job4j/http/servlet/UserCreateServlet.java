@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * - doGet URL /create - Открывает форму для создания нового пользователя.
@@ -23,8 +24,10 @@ public class UserCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String login = req.getParameter("login");
+        String password = req.getParameter("password");
         String email = req.getParameter("email");
-        User user = new User(name, login, email);
+        String role = req.getParameter("role");
+        User user = new User(0L, name, login, password, email, role, new Date());
         logic.add(user);
         resp.sendRedirect(req.getContextPath() + "/");
     }

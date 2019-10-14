@@ -13,11 +13,33 @@
 </head>
 <body>
 <form action='${pageContext.servletContext.contextPath}/edit' method='post'>
-    name: <input type='text' name='name' value='${user.name}'><br>
-    login: <input type='text' name='login' value='${user.login}'><br>
-    email: <input type='text' name='email' value='${user.email}'><br>
-    <input type='hidden' name='id' value='${user.id}'>
-    <input type='hidden' name='createdDate' value='${user.createDate.toString()}'>
+    <label>name:
+        <input type='text' name='name' value='${dto.name}'>
+    </label><br>
+    <label>login:
+        <input type='text' name='login' value='${dto.login}'>
+    </label><br>
+    <label>password:
+        <input type='text' name='password' value='${dto.password}'>
+    </label><br>
+    <label>email:
+        <input type='text' name='email' value='${dto.email}'>
+    </label><br>
+    <label>role:
+        <c:choose>
+            <c:when test="${'admin'.equals(user.role)}">
+                <select name="role">
+                    <option value="everyone" ${'everyone'.equals(dto.role)? 'selected': ''}>everyone</option>
+                    <option value="admin" ${'admin'.equals(dto.role)? 'selected': ''}>admin</option>
+                </select>
+            </c:when>
+            <c:otherwise>
+                ${dto.role}
+            </c:otherwise>
+        </c:choose>
+    </label><br>
+    <input type='hidden' name='id' value='${dto.id}'>
+    <input type='hidden' name='createdDate' value='${dto.createDate}'>
     <input type='submit'>
 </form>
 </body>

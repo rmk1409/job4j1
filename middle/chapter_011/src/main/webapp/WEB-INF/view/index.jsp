@@ -12,14 +12,34 @@
     <title>JSP</title>
 </head>
 <body>
-<form action='${pageContext.servletContext.contextPath}/create' method='post'>
-    <p>Create new user</p>
-    name: <input type='text' name='name'><br>
-    login: <input type='text' name='login'><br>
-    email: <input type='text' name='email'><br>
-    <input type='submit'>
-</form>
-<table>
+<h3>Hi, ${user.login}</h3>
+<c:if test="${'admin'.equals(user.role)}">
+    <form action='${pageContext.servletContext.contextPath}/create' method='post'>
+        <h4>Create new user</h4>
+        <label>name:
+            <input type='text' name='name'>
+        </label><br>
+        <label>login:
+            <input type='text' name='login'>
+        </label><br>
+        <label>password:
+            <input type='password' name='password'>
+        </label><br>
+        <label>email:
+            <input type='text' name='email'>
+        </label><br>
+        <label>role:
+            <select name="role">
+                <option value="everyone" selected>everyone</option>
+                <option value="admin">admin</option>
+            </select>
+        </label> <br>
+        <input type='submit' value="Add">
+    </form>
+</c:if>
+<button onclick="window.location.href = '${pageContext.servletContext.contextPath}/logout';">Logout</button>
+<br>
+<table border="1">
     <tr>
         <th>User</th>
         <th>Edit</th>
@@ -32,13 +52,13 @@
             <td>
                 <form action="${pageContext.servletContext.contextPath}/edit" method="get">
                     <input type="hidden" name="id" value="${current.id}">
-                    <button>edit</button>
+                    <button ${'admin'.equals(user.role) || current.id == user.id ? '' : 'disabled'}>edit</button>
                 </form>
             </td>
             <td>
                 <form action="${pageContext.servletContext.contextPath}/" method="post">
                     <input type="hidden" name="id" value="${current.id}">
-                    <button>delete</button>
+                    <button ${'admin'.equals(user.role)? '' : 'disabled'}>delete</button>
                 </form>
             </td>
         </tr>
