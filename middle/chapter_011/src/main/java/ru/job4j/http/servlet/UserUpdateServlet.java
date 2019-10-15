@@ -35,7 +35,7 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.valueOf(req.getParameter("id"));
+        long id = Long.parseLong(req.getParameter("id"));
         String name = req.getParameter("name");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
