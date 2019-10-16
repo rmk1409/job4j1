@@ -39,14 +39,25 @@
             return result;
         }
 
-        function add() {
-            let name = $('#name').val();
-            let lastName = $('#last-name').val();
-            let sex = $('#sex-select').val();
-            let description = $('#description').val();
+        function add(name, lastName, sex, description) {
             if (validate(name, lastName, description)) {
                 $('#table tr:last-child').after(`<tr><td>${name}</td><td>${lastName}</td><td>${sex}</td><td>${description}</td></tr>`);
             }
+        }
+
+        function sendDataToServer() {
+            let dataToServer = {
+                name: $('#name').val(),
+                lastName: $('#last-name').val(),
+                sex: $('#sex-select').val(),
+                description: $('#description').val()
+            };
+            $.post("./json"
+                , JSON.stringify(dataToServer)
+                , function (dataFromServer) {
+                    add(dataFromServer.name, dataFromServer.lastName, dataFromServer.sex, dataFromServer.description);
+                }
+            );
         }
     </script>
 </head>
@@ -78,6 +89,7 @@
             <input type="text" class="form-control" id="description">
         </div>
         <button type="button" class="btn btn-default" onclick="add()">Submit</button>
+        <button type="button" class="btn btn-default" onclick="sendDataToServer()">Ajax</button>
     </form>
 </div>
 
