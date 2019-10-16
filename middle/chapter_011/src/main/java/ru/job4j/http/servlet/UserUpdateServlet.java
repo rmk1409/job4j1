@@ -53,6 +53,6 @@ public class UserUpdateServlet extends HttpServlet {
         if (id == ((User) req.getSession().getAttribute("user")).getId()) {
             req.getSession().setAttribute("user", user);
         }
-        resp.sendRedirect(req.getContextPath() + "/");
+        resp.sendRedirect(req.getContextPath() + "/users");
     }
 }

@@ -23,7 +23,7 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath() + "/");
+        resp.sendRedirect(req.getContextPath() + "/users");
     }
 
     @Override
@@ -37,10 +37,9 @@ public class Login extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("user", user.get());
             session.removeAttribute("wrongCreds");
-            resp.sendRedirect(req.getContextPath() + "/");
         } else {
             req.getSession().setAttribute("wrongCreds", true);
-            this.doGet(req, resp);
         }
+        resp.sendRedirect(req.getContextPath() + "/users");
     }
 }
