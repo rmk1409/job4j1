@@ -1,3 +1,4 @@
+<!--Задание 1-->
 <!--3. Добавьте на страницу форму - с полями: имя, фамилия, пол, описание.-->
 <!--Используйте пример.-->
 <!--https://www.w3schools.com/bootstrap/bootstrap_forms.asp-->
@@ -11,6 +12,10 @@
 <!--2. Залей страницу в репозиторий.-->
 <!--3. Добавьте картинку в трекере.-->
 
+<!--Задание 2-->
+<!--1. В форму из задание #58522 для полей ввода добавьте атрибут id - Он должен быть уникальный для всей страницы.-->
+<!--2. Дописать функцию validate - оно должна пройти по всем полям ввода и получить у него value-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +25,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            let name = $('#name').val();
+            let lastName = $('#last-name').val();
+            let sex = $('#sex-select').val();
+            let description = $('#description').val();
+            if (name === '' || lastName === '' || description === '') {
+                alert("All fields shouldn't be empty!!")
+            } else {
+                alert(`Your name: ${name}\r\nYour last name: ${lastName}\r\nYour sex: ${sex}\r\nYour description: ${description}`);
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -27,47 +45,49 @@
     <h1>My First Bootstrap Page</h1>
     <p>This is some text.</p>
 </div>
-
-<form action="">
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name">
-    </div>
-    <div class="form-group">
-        <label for="last-name">Last name</label>
-        <input type="text" class="form-control" id="last-name">
-    </div>
-    <div class="form-group">
-        <label for="sex-select">Sex</label>
-        <select name="sex" id="sex-select">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
+<div class="container">
+    <form action="">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name">
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last name</label>
+            <input type="text" class="form-control" id="last-name">
+        </div>
+        <div class="form-group">
+            <label for="sex-select">Sex</label>
+            <select name="sex" id="sex-select">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description">
+        </div>
+        <button type="submit" class="btn btn-default" onclick="validate()">Submit</button>
+    </form>
+</div>
 
 <br>
 <br>
 <br>
-
-<table class="table table-striped">
-    <tr>
-        <th>Name</th>
-        <th>Last Name</th>
-        <th>Sex</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>Some Name</td>
-        <td>Some Last Name</td>
-        <td>Some Sex</td>
-        <td>Some Description</td>
-    </tr>
-</table>
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Sex</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>Some Name</td>
+            <td>Some Last Name</td>
+            <td>Some Sex</td>
+            <td>Some Description</td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
