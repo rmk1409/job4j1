@@ -1,0 +1,73 @@
+<!--3. Добавьте на страницу форму - с полями: имя, фамилия, пол, описание.-->
+<!--Используйте пример.-->
+<!--https://www.w3schools.com/bootstrap/bootstrap_forms.asp-->
+
+<!--4. Под формой добавьте таблицу.-->
+<!--Используйте примеры.-->
+<!--https://www.w3schools.com/bootstrap/bootstrap_tables.asp-->
+
+<!--Задание.-->
+<!--1. Создайте статическую страницу с формой ввода и таблицей под ним.-->
+<!--2. Залей страницу в репозиторий.-->
+<!--3. Добавьте картинку в трекере.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <h1>My First Bootstrap Page</h1>
+    <p>This is some text.</p>
+</div>
+
+<form action="">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name">
+    </div>
+    <div class="form-group">
+        <label for="last-name">Last name</label>
+        <input type="text" class="form-control" id="last-name">
+    </div>
+    <div class="form-group">
+        <label for="sex-select">Sex</label>
+        <select name="sex" id="sex-select">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+<br>
+<br>
+<br>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Sex</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Some Name</td>
+        <td>Some Last Name</td>
+        <td>Some Sex</td>
+        <td>Some Description</td>
+    </tr>
+</table>
+</body>
+</html>
