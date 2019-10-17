@@ -50,7 +50,7 @@ public class DBStore implements Store {
     @Override
     public void add(User user) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement st = connection.prepareStatement("INSERT INTO users(name, login, email, createddate, role, password) VALUES(?, ?, ?, ?, ?, ?);")
+             PreparedStatement st = connection.prepareStatement("INSERT INTO users(name, login, email, createddate, role, password, country, city) VALUES(?, ?, ?, ?, ?, ?, ?, ?);")
         ) {
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
@@ -58,6 +58,8 @@ public class DBStore implements Store {
             st.setTimestamp(4, new java.sql.Timestamp(user.getCreateDate().getTime()));
             st.setString(5, user.getRole());
             st.setString(6, user.getPassword());
+            st.setString(7, user.getCountry());
+            st.setString(8, user.getCity());
             st.executeUpdate();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
@@ -67,13 +69,15 @@ public class DBStore implements Store {
     @Override
     public void update(User user) {
         try (Connection con = SOURCE.getConnection();
-             PreparedStatement st = con.prepareStatement("UPDATE users SET name = ?, login = ?, email = ?, role = ?, password = ? WHERE ID = ?")) {
+             PreparedStatement st = con.prepareStatement("UPDATE users SET name = ?, login = ?, email = ?, role = ?, password = ?, country = ?, city = ? WHERE ID = ?")) {
             st.setString(1, user.getName());
             st.setString(2, user.getLogin());
             st.setString(3, user.getEmail());
             st.setString(4, user.getRole());
             st.setString(5, user.getPassword());
-            st.setLong(6, user.getId());
+            st.setString(6, user.getCountry());
+            st.setString(7, user.getCity());
+            st.setLong(8, user.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
@@ -130,7 +134,9 @@ public class DBStore implements Store {
         String email = set.getString("email");
         String role = set.getString("role");
         String password = set.getString("password");
+        String country = set.getString("country");
+        String city = set.getString("city");
         java.util.Date date = new java.util.Date(set.getTimestamp("createddate").getTime());
-        return new User(id, name, login, password, email, role, date);
+        return new User(id, name, login, password, email, role, date, country, city);
     }
 }

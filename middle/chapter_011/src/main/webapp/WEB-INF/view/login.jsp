@@ -10,18 +10,47 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function checkCreds() {
+            $.post("${pageContext.servletContext.contextPath}/login"
+                , JSON.stringify({login: $("#login").val(), password: $("#password").val()})
+                , function (dataFromServer) {
+                    if (dataFromServer === "false") {
+                        $("#alert-msg").css("display", "block");
+                    } else {
+                        $("#alert-msg").css("display", "none");
+                        window.location.href = dataFromServer;
+                    }
+                }
+            );
+        }
+    </script>
 </head>
 <body>
-<c:if test="${wrongCreds != null}">
-    <div style="background-color: darkorange">
-        <p>Wrong login/password</p>
-        <p>Try again</p>
+<div class="container">
+    <%--    <c:if test="${wrongCreds != null}">--%>
+    <div id="alert-msg" class="alert alert-primary" style="background: aquamarine; color: blue; display:none">
+        Wrong login/password. Try again
     </div>
-</c:if>
-<form action="${pageContext.servletContext.contextPath}/login" method="post">
-    <label> login: <input type="text" name="login"> </label><br>
-    <label> passw: <input type="password" name="password"> </label><br>
-    <input type="submit">
-</form>
+    <%--    </c:if>--%>
+    <form action="${pageContext.servletContext.contextPath}/login" method="post">
+        <div class="form-group row">
+            <label for="login" class="col-sm-2 col-form-label">Login</label>
+            <div class="col-sm-10">
+                <input id="login" class="form-control" type="text" name="login" placeholder="Login">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+                <input id="password" class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+        </div>
+        <input class="btn btn-success" type="button" value="Login" onclick="return checkCreds()">
+    </form>
+</div>
 </body>
 </html>

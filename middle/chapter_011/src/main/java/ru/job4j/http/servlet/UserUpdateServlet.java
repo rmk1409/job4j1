@@ -40,6 +40,8 @@ public class UserUpdateServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
+        String country = req.getParameter("country");
+        String city = req.getParameter("city");
         String role = req.getParameter("role");
         Date createdDate = null;
         try {
@@ -48,7 +50,7 @@ public class UserUpdateServlet extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        User user = new User(id, name, login, password, email, role, createdDate);
+        User user = new User(id, name, login, password, email, role, createdDate, country, city);
         this.logic.update(user);
         if (id == ((User) req.getSession().getAttribute("user")).getId()) {
             req.getSession().setAttribute("user", user);

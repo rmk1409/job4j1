@@ -26,8 +26,10 @@ public class UserCreateServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
+        String country = req.getParameter("country");
+        String city = req.getParameter("city");
         String role = req.getParameter("role");
-        User user = new User(0L, name, login, password, email, role, new Date());
+        User user = new User(0L, name, login, password, email, role, new Date(), country, city);
         logic.add(user);
         resp.sendRedirect(req.getContextPath() + "/users");
     }

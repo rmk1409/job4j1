@@ -16,6 +16,8 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private String country;
+    private String city;
     private Date createDate;
 
     public User() {
@@ -26,10 +28,11 @@ public class User {
     }
 
     public User(long id, String name, String login, String email, Date createDate) {
-        this(id, name, login, "password", email, "everyone", createDate);
+        this(id, name, login, "password", email, "everyone", createDate, "Russia", "Msc");
     }
 
-    public User(long id, String name, String login, String password, String email, String role, Date createDate) {
+    @SuppressWarnings({"ParameterNumber"})
+    public User(long id, String name, String login, String password, String email, String role, Date createDate, String country, String city) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -37,6 +40,8 @@ public class User {
         this.email = email;
         this.role = role;
         this.createDate = createDate;
+        this.country = country;
+        this.city = city;
     }
 
     public long getId() {
@@ -95,6 +100,22 @@ public class User {
         this.password = password;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
         return "User{"
@@ -103,6 +124,8 @@ public class User {
                 + ", login='" + login + '\''
                 + ", password='" + password + '\''
                 + ", email='" + email + '\''
+                + ", country='" + country + '\''
+                + ", city='" + city + '\''
                 + ", role='" + role + '\''
                 + ", createDate=" + createDate
                 + '}';
